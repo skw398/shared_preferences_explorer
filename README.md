@@ -2,7 +2,7 @@
 
 On-screen viewing and editing of shared_preferences
 
-![](https://github.com/skw398/shared_preferences_explorer/blob/main/assets/screenshot.png?raw=true)
+![](https://github.com/skw398/shared_preferences_explorer/blob/main/assets/screenshots.png?raw=true)
 
 ## Usage
 
@@ -36,7 +36,6 @@ void main() {
 ## Note
 
 * The timing of updates on your app's display after editing still depends on the implementation of your code.
-* Make sure not to set `double` for keys treated as `int` in your code, because this package does not distinguish between `int` and `double`[^1].
+* Make sure not to set `double` for keys treated as `int` in your code, because this package does not distinguish between `int` and `double`.
+  * *Under the shared_preferences specification, it is not possible to distinguish whether an integer values were saved as `int` or `double`. Iinteger values can be retrieved using any of `get`, `getInt` or `getDouble`, no matter which method was used to save them.*
 * Throws an exception if `SharedPreferencesExplorer` is included in release mode.
-
-[^1]: Under the shared_preferences specification, it is not possible to distinguish whether an integer values were saved as `int` or `double`. Iinteger values can be retrieved using any of `get`, `getInt` or `getDouble`, no matter which method was used to save them.
