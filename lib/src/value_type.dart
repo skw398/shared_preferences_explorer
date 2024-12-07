@@ -16,7 +16,7 @@ enum ValueType {
       return ValueType.bool;
     } else if (value is core.String) {
       return ValueType.string;
-    } else if (value is core.List<core.String>) {
+    } else if (value is core.List) {
       return ValueType.stringList;
     } else {
       throw core.AssertionError('Unexpected type');

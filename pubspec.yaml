@@ -1,20 +1,21 @@
 name: shared_preferences_explorer
-description: "On-screen viewing and editing of shared_preferences"
-version: 0.0.2
+description: "A Flutter package for on-screen viewing of shared_preferences. Supports SharedPreferences, SharedPreferencesAsync, and SharedPreferencesWithCache."
+version: 0.1.0
 repository: https://github.com/skw398/shared_preferences_explorer
 
 environment:
-  sdk: '>=3.2.0 <4.0.0'
-  flutter: ">=3.16.0"
+  sdk: '>=3.4.0 <4.0.0'
+  flutter: ">=3.22.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: ^2.0.0
+  shared_preferences: ^2.3.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  very_good_analysis: ^6.0.0
 
 platforms:
   android:
@@ -25,8 +26,10 @@ platforms:
   windows:
 
 screenshots:
-  - description: "screenshots"
-    path: assets/screenshots.png
+  - description: "screenshot1"
+    path: assets/screenshot1.png
+  - description: "screenshot2"
+    path: assets/screenshot2.png
 
 topics:
   - shared-preferences

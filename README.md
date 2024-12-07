@@ -1,41 +1,33 @@
 # shared_preferences_explorer
 
-On-screen viewing and editing of shared_preferences
+A Flutter package for on-screen viewing of shared_preferences.  
+Supports `SharedPreferences`, `SharedPreferencesAsync`, and `SharedPreferencesWithCache`.
 
-![](https://github.com/skw398/shared_preferences_explorer/blob/main/assets/screenshots.png?raw=true)
+| <img width="240" src="https://github.com/skw398/shared_preferences_explorer/blob/main/assets/screenshot1.png?raw=true"> | <img width="240" src="https://github.com/skw398/shared_preferences_explorer/blob/main/assets/screenshot2.png?raw=true"> |
+| - | - |
 
 ## Usage
 
-Wrap your root widget with `SharedPreferencesExplorer`.
-
-Then tap the button, set by default to the `Alignment.bottomLeft`, to open.
+Wrap your app's root widget with `SharedPreferencesExplorer`, and tap the anchor button to open.  
+The anchor button is draggable, and the initial position can be set using `initialAnchorAlignment`.
 
 ```dart
 void main() {
   runApp(
     SharedPreferencesExplorer(
-      // anchorAlignment: Alignment.bottomLeft,
-      // colorSchemeSeed: Colors.lightGreen,
+      // initialAnchorAlignment: AnchorAlignment.bottomLeft,
       child: YourApp(),
     ),
   );
 }
 ```
 
-Or, directly displays if `child` is null.
+Or, use `SharedPreferencesExplorerScreen` in your app's debug menu, etc.
 
 ```dart
-void main() {
-  runApp(
-    const SharedPreferencesExplorer(),
-    // YourApp(),
-  );
-}
+Navigator.of(context).push(
+  MaterialPageRoute<void>(
+    builder: (context) => const SharedPreferencesExplorerScreen(),
+  ),
+);
 ```
-
-## Note
-
-* The timing of updates on your app's display after editing still depends on the implementation of your code.
-* Make sure not to set `double` for keys treated as `int` in your code, because this package does not distinguish between `int` and `double`.
-  * *Under the shared_preferences specification, it is not possible to distinguish whether an integer values were saved as `int` or `double`. Iinteger values can be retrieved using any of `get`, `getInt` or `getDouble`, no matter which method was used to save them.*
-* Throws an exception if `SharedPreferencesExplorer` is included in release mode.

@@ -1,52 +1,38 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences_explorer/src/anchor.dart';
+import 'package:shared_preferences_explorer/src/anchor_alignment.dart';
+import 'package:shared_preferences_explorer/src/filter.dart';
 
-import 'filter.dart';
-import 'shared_preferences_explorer_screen.dart';
+export 'anchor_alignment.dart';
 
 class SharedPreferencesExplorer extends StatefulWidget {
-  /// Wrap your root widget with [SharedPreferencesExplorer].
+  /// Wrap your app's root widget. and tap the anchor button to open.
   ///
-  /// Then tap the button, set by default to the [Alignment.bottomLeft], to
-  /// open.
+  /// The anchor button is draggable, and the initial position can be set using
+  /// [initialAnchorAlignment].
   ///
   /// ```dart
   /// void main() {
   ///   runApp(
   ///     SharedPreferencesExplorer(
-  ///       // anchorAlignment: Alignment.bottomLeft,
-  ///       // colorSchemeSeed: Colors.lightGreen,
+  ///       // initialAnchorAlignment: AnchorAlignment.bottomLeft,
   ///       child: YourApp(),
   ///     ),
   ///   );
   /// }
   /// ```
-  ///
-  /// Or, directly displays if [child] is null.
-  ///
-  /// ```dart
-  /// void main() {
-  ///   runApp(
-  ///     const SharedPreferencesExplorer(),
-  ///     // YourApp(),
-  ///   );
-  /// }
-  /// ```
   const SharedPreferencesExplorer({
+    required this.child,
     super.key,
-    this.anchorAlignment = Alignment.bottomLeft,
-    this.colorSchemeSeed = Colors.lightGreen,
-    this.child,
+    this.initialAnchorAlignment = AnchorAlignment.bottomLeft,
   });
 
-  /// The position for the anchor button
-  final Alignment anchorAlignment;
-
-  /// The seed color
-  final Color colorSchemeSeed;
+  /// The initial position for the draggable anchor button
+  final AnchorAlignment initialAnchorAlignment;
 
   /// The root widget of your application
-  final Widget? child;
+  final Widget child;
 
   @override
   State<SharedPreferencesExplorer> createState() =>
@@ -57,6 +43,8 @@ class _SharedPreferencesExplorerState extends State<SharedPreferencesExplorer> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   final _filter = Filter();
 
+  final colorSchemeSeed = Colors.blue;
+
   @override
   Widget build(BuildContext context) {
     if (kReleaseMode) {
@@ -65,110 +53,28 @@ class _SharedPreferencesExplorerState extends State<SharedPreferencesExplorer> {
       );
     }
 
-    final themeData = _themeData(context, widget.colorSchemeSeed);
-
-    if (widget.child == null) {
-      return MaterialApp(
-        theme: themeData,
-        debugShowCheckedModeBanner: false,
-        home: SharedPreferencesExplorerScreenStarter(filter: _filter),
-      );
-    }
-
     return Stack(
-      alignment: widget.anchorAlignment,
+      alignment: Alignment.center,
       children: [
-        widget.child!,
-        _Anchor(
-          colorScheme: themeData.colorScheme,
+        widget.child,
+        Anchor(
+          colorScheme: ThemeData(
+            colorSchemeSeed: colorSchemeSeed,
+            brightness: MediaQuery.platformBrightnessOf(context),
+          ).colorScheme,
           navigatorKey: _navigatorKey,
           filter: _filter,
+          initialAnchorAlignment: widget.initialAnchorAlignment,
         ),
-        _RouteContainer(
-          themeData: themeData,
-          navigatorKey: _navigatorKey,
-        ),
+        _RouteContainer(navigatorKey: _navigatorKey),
       ],
-    );
-  }
-
-  ThemeData _themeData(BuildContext context, Color colorSchemeSeed) {
-    return ThemeData(
-      colorSchemeSeed: colorSchemeSeed,
-      brightness: MediaQuery.platformBrightnessOf(context),
-    );
-  }
-}
-
-class _Anchor extends StatefulWidget {
-  const _Anchor({
-    required this.colorScheme,
-    required this.navigatorKey,
-    required this.filter,
-  });
-
-  final ColorScheme colorScheme;
-  final GlobalKey<NavigatorState> navigatorKey;
-  final Filter filter;
-
-  @override
-  State<_Anchor> createState() => _AnchorState();
-}
-
-class _AnchorState extends State<_Anchor> {
-  bool _isNavigating = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final basePadding = MediaQuery.paddingOf(context);
-
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
-        basePadding.left + 16,
-        basePadding.top + 16,
-        basePadding.right + 16,
-        basePadding.bottom + 16,
-      ),
-      child: Directionality(
-        textDirection: TextDirection.ltr,
-        child: FloatingActionButton(
-          foregroundColor: widget.colorScheme.onPrimaryContainer,
-          backgroundColor: widget.colorScheme.primaryContainer,
-          splashColor: widget.colorScheme.onPrimaryContainer.withOpacity(0.12),
-          focusColor: widget.colorScheme.onPrimaryContainer.withOpacity(0.12),
-          hoverColor: widget.colorScheme.onPrimaryContainer.withOpacity(0.08),
-          onPressed: _isNavigating
-              ? null
-              : () async {
-                  setState(() => _isNavigating = true);
-                  final context = widget.navigatorKey.currentContext;
-                  assert(context != null, 'Unexpected');
-                  await Navigator.of(context!).push(
-                    MaterialPageRoute<void>(
-                      builder: (context) {
-                        return SharedPreferencesExplorerScreenStarter(
-                          filter: widget.filter,
-                        );
-                      },
-                      fullscreenDialog: true,
-                    ),
-                  );
-                  setState(() => _isNavigating = false);
-                },
-          child: const Icon(Icons.source),
-        ),
-      ),
     );
   }
 }
 
 class _RouteContainer extends StatefulWidget {
-  const _RouteContainer({
-    required this.themeData,
-    required this.navigatorKey,
-  });
+  const _RouteContainer({required this.navigatorKey});
 
-  final ThemeData themeData;
   final GlobalKey<NavigatorState> navigatorKey;
 
   @override
@@ -197,7 +103,6 @@ class _RouteContainerState extends State<_RouteContainer> {
     return IgnorePointer(
       ignoring: !_isPageOpen,
       child: MaterialApp(
-        theme: widget.themeData,
         navigatorObservers: [_navigatorObserver],
         navigatorKey: widget.navigatorKey,
         debugShowCheckedModeBanner: false,
@@ -214,7 +119,7 @@ class _NavigatorObserver extends RouteObserver {
   });
 
   final void Function({required bool isPageOpen}) onStateChange;
-  GlobalKey<NavigatorState> navigatorKey;
+  final GlobalKey<NavigatorState> navigatorKey;
 
   bool _isPageOpen = false;
 
