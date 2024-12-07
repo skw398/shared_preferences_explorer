@@ -1,6 +1,6 @@
-import 'value_type.dart';
+import 'package:shared_preferences_explorer/src/value_type.dart';
 
 class Filter {
   List<ValueType> valueTypes = [];
-  String text = '';
+  String searchText = '';
 }

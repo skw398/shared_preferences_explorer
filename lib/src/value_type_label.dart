@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-import 'value_type.dart';
+import 'package:shared_preferences_explorer/src/value_type.dart';
 
 class ValueTypeLabel extends StatelessWidget {
   const ValueTypeLabel({
-    super.key,
     required this.type,
+    super.key,
   });
 
   final ValueType type;
