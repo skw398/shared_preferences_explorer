@@ -1,4 +1,4 @@
-/// The initial position for the draggable anchor button
+/// The position of the draggable anchor button
 enum AnchorAlignment {
   topLeft,
   topCenter,
