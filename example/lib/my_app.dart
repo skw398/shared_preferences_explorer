@@ -117,11 +117,22 @@ class _DebugMenu extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
-            title: const Text('Show shared_preferences values'),
+            title: const Text('SharedPreferences values'),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute<void>(
                   builder: (context) => const SharedPreferencesExplorerScreen(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('SharedPreferencesAsync values'),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) =>
+                      const SharedPreferencesAsyncExplorerScreen(),
                 ),
               );
             },

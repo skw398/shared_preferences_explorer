@@ -8,7 +8,4 @@ enum AnchorAlignment {
   bottomLeft,
   bottomCenter,
   bottomRight,
-  ;
-
-  const AnchorAlignment();
 }

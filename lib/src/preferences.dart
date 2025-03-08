@@ -1,44 +1,45 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_explorer/src/filter.dart';
 import 'package:shared_preferences_explorer/src/preference.dart';
-import 'package:shared_preferences_explorer/src/shared_preference_type.dart';
+import 'package:shared_preferences_explorer/src/shared_preferences_instance_container.dart';
 
 class Preferences {
   Preferences._(this._preferences);
 
   final List<Preference> _preferences;
 
-  static Future<Preferences> init() async {
+  static Future<Preferences> init({
+    required SharedPreferencesInstanceContainer instanceContainer,
+  }) async {
     final result = <Preference>[];
 
-    // SharedPreferencesAsync can get all including Legacy.
-    final preferences = await SharedPreferencesAsync().getAll();
-    for (final entry in preferences.entries) {
-      assert(entry.value != null, 'Unexpected');
-      result.add(
-        Preference.fromNativeKey(
-          entry.key,
-          entry.value!,
-        ),
-      );
+    final sharedPreferences = instanceContainer.sharedPreferences;
+    final sharedPreferencesAsync = instanceContainer.sharedPreferencesAsync;
+
+    if (sharedPreferencesAsync != null) {
+      final preferences = await sharedPreferencesAsync.getAll();
+      for (final entry in preferences.entries) {
+        assert(entry.value != null, 'Unexpected');
+
+        // Skip legacy SharedPreferences keys
+        const legacyPrefix = 'flutter.';
+        if (entry.key.startsWith(legacyPrefix)) {
+          continue;
+        }
+
+        result.add(
+          Preference.fromKey(entry.key, entry.value!),
+        );
+      }
     }
 
-    // SharedPreferencesAsync cannot get Legacy on Android.
-    if (!kIsWeb && Platform.isAndroid) {
-      final prefs = await SharedPreferences.getInstance();
-      final keys = prefs.getKeys();
+    if (sharedPreferences != null) {
+      final keys = sharedPreferences.getKeys();
       for (final key in keys) {
-        final value = prefs.get(key);
+        final value = sharedPreferences.get(key);
         assert(value != null, 'Unexpected');
+
         result.add(
-          Preference.fromKey(
-            key,
-            value!,
-            sharedPreferencesType: SharedPreferencesType.legacy,
-          ),
+          Preference.fromKey(key, value!),
         );
       }
     }

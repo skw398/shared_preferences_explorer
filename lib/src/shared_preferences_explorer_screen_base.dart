@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences_explorer/src/filter.dart';
 import 'package:shared_preferences_explorer/src/preference.dart';
 import 'package:shared_preferences_explorer/src/preferences.dart';
-import 'package:shared_preferences_explorer/src/shared_preference_type.dart';
+import 'package:shared_preferences_explorer/src/shared_preferences_instance_container.dart';
 import 'package:shared_preferences_explorer/src/value_type.dart';
 import 'package:shared_preferences_explorer/src/value_type_label.dart';
 
 class SharedPreferencesExplorerScreenBaseStarter extends StatelessWidget {
-  const SharedPreferencesExplorerScreenBaseStarter({super.key});
+  const SharedPreferencesExplorerScreenBaseStarter({
+    required this.instanceContainer,
+    super.key,
+  });
+
+  final SharedPreferencesInstanceContainer instanceContainer;
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +22,12 @@ class SharedPreferencesExplorerScreenBaseStarter extends StatelessWidget {
         brightness: MediaQuery.platformBrightnessOf(context),
       ),
       child: FutureBuilder<Preferences>(
-        future: Preferences.init(),
+        future: Preferences.init(instanceContainer: instanceContainer),
         builder: (context, snapshot) {
           final preferences = snapshot.data;
           if (preferences == null) {
             return const Scaffold(
-              body: Center(
-                child: Text('Loading...'),
-              ),
+              body: Center(child: Text('Loading...')),
             );
           }
           return _SharedPreferencesExplorerScreenBase(preferences: preferences);
@@ -117,16 +120,6 @@ class _SharedPreferencesExplorerScreenBaseState
               child: Row(
                 children: [
                   Text('${filteredPreferences.length} results'),
-                  const Spacer(),
-                  if (filteredPreferences.any(
-                    (preference) =>
-                        preference.sharedPreferencesType ==
-                        SharedPreferencesType.asyncOrWithCache,
-                  ))
-                    Text(
-                      '* ${SharedPreferencesType.asyncOrWithCache.label}',
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
                 ],
               ),
             ),
@@ -207,10 +200,6 @@ class _PreferenceCard extends StatelessWidget {
             Row(
               children: [
                 ValueTypeLabel(type: preference.valueType),
-                const SizedBox(width: 4),
-                if (preference.sharedPreferencesType ==
-                    SharedPreferencesType.asyncOrWithCache)
-                  const Text('*'),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
