@@ -31,7 +31,5 @@ build/
 .flutter-plugins
 .flutter-plugins-dependencies
 
-# FVM Version Cache
-.fvm/
-
 mise.toml
+/example_latest/
