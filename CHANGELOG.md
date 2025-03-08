@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Separate APIs for `SharedPreferencesAsync` and `SharedPreferencesWithCache`.
+
 ## 0.1.0
 
 * Removes edit and delete functionality.
