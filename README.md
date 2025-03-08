@@ -8,26 +8,44 @@ Supports `SharedPreferences`, `SharedPreferencesAsync`, and `SharedPreferencesWi
 
 ## Usage
 
-Wrap your app's root widget with `SharedPreferencesExplorer`, and tap the anchor button to open.  
-The anchor button is draggable, and the initial position can be set using `initialAnchorAlignment`.
+There are two types of APIs.
+
+### Wrap your app's root widget with `SharedPreferencesExplorer`, and tap the anchor button to open.
+
+If you are using `SharedPreferencesAsync` or `SharedPreferencesWithCache` in your app, use `SharedPreferencesAsyncExplorer` instead.
 
 ```dart
 void main() {
   runApp(
     SharedPreferencesExplorer(
-      // initialAnchorAlignment: AnchorAlignment.bottomLeft,
+      // /*Optional*/ instance:
+      // /*Optional*/ initialAnchorAlignment: 
       child: YourApp(),
     ),
   );
 }
 ```
 
-Or, use `SharedPreferencesExplorerScreen` in your app's debug menu, etc.
+- You can optionally provide a `SharedPreferences` instance to the `instance` parameter. If not provided, `SharedPreferences.getInstance()` or `SharedPreferencesAsync()` will be used.
+
+- The anchor button is draggable, and the initial position can be set using `initialAnchorAlignment` parameter.
+
+---
+
+### Or, use `SharedPreferencesExplorerScreen` anywhere in your app.
+
+ Or, use `SharedPreferencesExplorerAsyncScreen` as well.
 
 ```dart
 Navigator.of(context).push(
   MaterialPageRoute<void>(
-    builder: (context) => const SharedPreferencesExplorerScreen(),
+    builder: (context) =>
+        const SharedPreferencesExplorerScreen(
+            // /*Optional*/ instance:
+            ),
   ),
 );
 ```
+
+## Note
+- The cache feature of `SharedPreferencesWithCache` is ignored, and the latest value is always retrieved.
