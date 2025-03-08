@@ -41,8 +41,6 @@ class SharedPreferencesExplorer extends StatefulWidget {
 
 class _SharedPreferencesExplorerState extends State<SharedPreferencesExplorer> {
   final _navigatorKey = GlobalKey<NavigatorState>();
-  final _filter = Filter();
-
   final colorSchemeSeed = Colors.blue;
 
   @override
@@ -53,21 +51,22 @@ class _SharedPreferencesExplorerState extends State<SharedPreferencesExplorer> {
       );
     }
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        widget.child,
-        Anchor(
-          colorScheme: ThemeData(
-            colorSchemeSeed: colorSchemeSeed,
-            brightness: MediaQuery.platformBrightnessOf(context),
-          ).colorScheme,
-          navigatorKey: _navigatorKey,
-          filter: _filter,
-          initialAnchorAlignment: widget.initialAnchorAlignment,
-        ),
-        _RouteContainer(navigatorKey: _navigatorKey),
-      ],
+    return FilterContext(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          widget.child,
+          Anchor(
+            colorScheme: ThemeData(
+              colorSchemeSeed: colorSchemeSeed,
+              brightness: MediaQuery.platformBrightnessOf(context),
+            ).colorScheme,
+            navigatorKey: _navigatorKey,
+            initialAnchorAlignment: widget.initialAnchorAlignment,
+          ),
+          _RouteContainer(navigatorKey: _navigatorKey),
+        ],
+      ),
     );
   }
 }

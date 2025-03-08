@@ -7,12 +7,7 @@ import 'package:shared_preferences_explorer/src/value_type.dart';
 import 'package:shared_preferences_explorer/src/value_type_label.dart';
 
 class SharedPreferencesExplorerScreenBaseStarter extends StatelessWidget {
-  const SharedPreferencesExplorerScreenBaseStarter({
-    required this.filter,
-    super.key,
-  });
-
-  final Filter filter;
+  const SharedPreferencesExplorerScreenBaseStarter({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +17,7 @@ class SharedPreferencesExplorerScreenBaseStarter extends StatelessWidget {
         brightness: MediaQuery.platformBrightnessOf(context),
       ),
       child: FutureBuilder<Preferences>(
-        future: Preferences.init(filter),
+        future: Preferences.init(),
         builder: (context, snapshot) {
           final preferences = snapshot.data;
           if (preferences == null) {
@@ -51,24 +46,30 @@ class _SharedPreferencesExplorerScreenBase extends StatefulWidget {
 
 class _SharedPreferencesExplorerScreenBaseState
     extends State<_SharedPreferencesExplorerScreenBase> {
-  late final Filter _filter;
-  final _controller = TextEditingController();
+  TextEditingController? _controller;
+  bool _initialized = false;
 
   @override
-  void initState() {
-    super.initState();
-    _filter = widget.preferences.filter;
-    _controller
-      ..text = _filter.searchText
-      ..addListener(() {
-        setState(() => _filter.searchText = _controller.text);
-      });
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final canPop = Navigator.of(context).canPop();
-    final filteredPreferences = widget.preferences.filtered;
+    final filter = Filter.of(context).state;
+    final filteredPreferences = widget.preferences.filtered(filter);
+
+    if (!_initialized) {
+      _controller = TextEditingController(text: filter.searchText);
+      _controller!.addListener(() {
+        final filter = Filter.of(context).state;
+        Filter.of(context).state =
+            filter.copyWith(searchText: _controller!.text);
+      });
+      _initialized = true;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -100,13 +101,14 @@ class _SharedPreferencesExplorerScreenBaseState
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: _FilterChips(
-                filter: _filter,
+                filter: filter,
                 onSelected: (valueType, {required isSelected}) {
-                  setState(() {
-                    isSelected
-                        ? _filter.valueTypes.add(valueType)
-                        : _filter.valueTypes.remove(valueType);
-                  });
+                  final valueTypes = List<ValueType>.from(filter.valueTypes);
+                  isSelected
+                      ? valueTypes.add(valueType)
+                      : valueTypes.remove(valueType);
+                  Filter.of(context).state =
+                      filter.copyWith(valueTypes: valueTypes);
                 },
               ),
             ),

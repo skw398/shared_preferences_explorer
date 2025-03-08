@@ -16,5 +16,5 @@ class SharedPreferencesExplorerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      SharedPreferencesExplorerScreenBaseStarter(filter: Filter());
+      const FilterContext(child: SharedPreferencesExplorerScreenBaseStarter());
 }

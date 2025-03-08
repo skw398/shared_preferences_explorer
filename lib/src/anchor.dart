@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences_explorer/shared_preferences_explorer.dart';
-import 'package:shared_preferences_explorer/src/filter.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_explorer_screen_base.dart';
 
 class Anchor extends StatefulWidget {
   const Anchor({
     required this.colorScheme,
     required this.navigatorKey,
-    required this.filter,
     required this.initialAnchorAlignment,
     super.key,
   });
 
   final ColorScheme colorScheme;
   final GlobalKey<NavigatorState> navigatorKey;
-  final Filter filter;
   final AnchorAlignment initialAnchorAlignment;
 
   @override
@@ -93,9 +90,8 @@ class _AnchorState extends State<Anchor> {
                         await Navigator.of(context!).push(
                           MaterialPageRoute<void>(
                             builder: (context) {
-                              return SharedPreferencesExplorerScreenBaseStarter(
-                                filter: widget.filter,
-                              );
+                              // ignore: lines_longer_than_80_chars
+                              return const SharedPreferencesExplorerScreenBaseStarter();
                             },
                             fullscreenDialog: true,
                           ),

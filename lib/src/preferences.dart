@@ -7,12 +7,11 @@ import 'package:shared_preferences_explorer/src/preference.dart';
 import 'package:shared_preferences_explorer/src/shared_preference_type.dart';
 
 class Preferences {
-  Preferences._(this._preferences, this.filter);
+  Preferences._(this._preferences);
 
   final List<Preference> _preferences;
-  final Filter filter;
 
-  static Future<Preferences> init(Filter filter) async {
+  static Future<Preferences> init() async {
     final result = <Preference>[];
 
     // SharedPreferencesAsync can get all including Legacy.
@@ -46,10 +45,10 @@ class Preferences {
 
     result.sort((a, b) => a.key.compareTo(b.key));
 
-    return Preferences._(result, filter);
+    return Preferences._(result);
   }
 
-  List<Preference> get filtered {
+  List<Preference> filtered(Filter filter) {
     return _preferences.where((preference) {
       final typeMatch = filter.valueTypes.isEmpty ||
           filter.valueTypes.contains(preference.valueType);
