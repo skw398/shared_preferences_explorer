@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Add JSON export feature.
+
 ## 0.2.0
 
 * Separate APIs for `SharedPreferencesAsync` and `SharedPreferencesWithCache`.
