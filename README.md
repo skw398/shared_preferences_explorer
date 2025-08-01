@@ -8,33 +8,37 @@ Supports `SharedPreferences`, `SharedPreferencesAsync`, and `SharedPreferencesWi
 
 ## Usage
 
-There are two types of APIs.
+| | 1. Floating button widget | 2. Screen widget |
+| - | - | - |
+| SharedPreferences | SharedPreferencesExplorer | SharedPreferencesExplorerScreen |
+| SharedPreferencesAsync | SharedPreferencesAsyncExplorer | SharedPreferencesExplorerAsyncScreen |
+| SharedPreferencesWithCache | SharedPreferencesAsyncExplorer *(cache is ignored)* | SharedPreferencesExplorerAsyncScreen *(cache is ignored)* |
 
-### Wrap your app's root widget with `SharedPreferencesExplorer`, and tap the anchor button to open.
+---
 
-If you are using `SharedPreferencesAsync` or `SharedPreferencesWithCache` in your app, use `SharedPreferencesAsyncExplorer` instead.
+### 1. Floating button widget
+
+Wrap your app's root widget with `SharedPreferencesExplorer` or `SharedPreferencesAsyncExplorer`, and tap the floating button to open.
 
 ```dart
 void main() {
   runApp(
     SharedPreferencesExplorer(
       // /*Optional*/ instance:
-      // /*Optional*/ initialAnchorAlignment: 
+      // /*Optional*/ initialFloatingButtonAlignment: 
       child: YourApp(),
     ),
   );
 }
 ```
 
-- You can optionally provide a `SharedPreferences` instance to the `instance` parameter. If not provided, `SharedPreferences.getInstance()` or `SharedPreferencesAsync()` will be used.
-
-- The anchor button is draggable, and the initial position can be set using `initialAnchorAlignment` parameter.
+- The floating button is draggable, and the initial position can be set using `initialFloatingButtonAlignment` parameter.
 
 ---
 
-### Or, use `SharedPreferencesExplorerScreen` anywhere in your app.
+### 2. Screen widget
 
- Or, use `SharedPreferencesExplorerAsyncScreen` as well.
+Use `SharedPreferencesExplorerScreen` or `SharedPreferencesExplorerAsyncScreen` anywhere in your app.
 
 ```dart
 Navigator.of(context).push(
@@ -48,4 +52,7 @@ Navigator.of(context).push(
 ```
 
 ## Note
-- The cache feature of `SharedPreferencesWithCache` is ignored, and the latest value is always retrieved.
+
+- Any cache settings in `SharedPreferencesWithCache` will be ignored and the latest value is always retrieved.
+
+- You can optionally provide an instance to the `instance` parameter. If not provided, `SharedPreferences.getInstance()` or `SharedPreferencesAsync()` will be used.
