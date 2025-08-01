@@ -3,37 +3,37 @@ import 'package:shared_preferences_explorer/shared_preferences_explorer.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_explorer_screen_base.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_instance_container.dart';
 
-class Anchor extends StatefulWidget {
-  const Anchor({
+class FloatingButton extends StatefulWidget {
+  const FloatingButton({
     required this.instanceContainer,
     required this.colorScheme,
     required this.navigatorKey,
-    required this.initialAnchorAlignment,
+    required this.initialAlignment,
     super.key,
   });
 
   final SharedPreferencesInstanceContainer instanceContainer;
   final ColorScheme colorScheme;
   final GlobalKey<NavigatorState> navigatorKey;
-  final AnchorAlignment initialAnchorAlignment;
+  final FloatingButtonAlignment initialAlignment;
 
   @override
-  State<Anchor> createState() => _AnchorState();
+  State<FloatingButton> createState() => _FloatingButtonState();
 
   static const size = 56.0;
 }
 
-class _AnchorState extends State<Anchor> {
+class _FloatingButtonState extends State<FloatingButton> {
   bool _isNavigating = false;
 
   bool _isDragging = false;
   Offset _dragPosition = Offset.zero;
-  late AnchorAlignment _currentAlignment;
+  late FloatingButtonAlignment _currentAlignment;
 
   @override
   void initState() {
     super.initState();
-    _currentAlignment = widget.initialAnchorAlignment;
+    _currentAlignment = widget.initialAlignment;
   }
 
   @override
@@ -43,8 +43,8 @@ class _AnchorState extends State<Anchor> {
       child: Stack(
         children: [
           AnimatedPositioned(
-            width: Anchor.size,
-            height: Anchor.size,
+            width: FloatingButton.size,
+            height: FloatingButton.size,
             left: _isDragging
                 ? _dragPosition.dx
                 : _currentAlignment.position(context).dx,
@@ -111,10 +111,10 @@ class _AnchorState extends State<Anchor> {
     );
   }
 
-  AnchorAlignment _findNearest(BuildContext context, Offset current) {
+  FloatingButtonAlignment _findNearest(BuildContext context, Offset current) {
     var minDistance = double.infinity;
-    late AnchorAlignment nearest;
-    for (final alignment in AnchorAlignment.values) {
+    late FloatingButtonAlignment nearest;
+    for (final alignment in FloatingButtonAlignment.values) {
       final distance = (alignment.position(context) - current).distance;
       if (distance < minDistance) {
         minDistance = distance;
@@ -125,7 +125,7 @@ class _AnchorState extends State<Anchor> {
   }
 }
 
-extension on AnchorAlignment {
+extension on FloatingButtonAlignment {
   Offset position(BuildContext context) {
     const basePadding = 16.0;
 
@@ -140,37 +140,37 @@ extension on AnchorAlignment {
     );
 
     return switch (this) {
-      AnchorAlignment.topLeft => Offset(
+      FloatingButtonAlignment.topLeft => Offset(
           paddingLeft,
           paddingTop,
         ),
-      AnchorAlignment.topCenter => Offset(
-          paddingLeft + (areaSize.width - Anchor.size) / 2,
+      FloatingButtonAlignment.topCenter => Offset(
+          paddingLeft + (areaSize.width - FloatingButton.size) / 2,
           paddingTop,
         ),
-      AnchorAlignment.topRight => Offset(
-          paddingLeft + areaSize.width - Anchor.size,
+      FloatingButtonAlignment.topRight => Offset(
+          paddingLeft + areaSize.width - FloatingButton.size,
           paddingTop,
         ),
-      AnchorAlignment.centerLeft => Offset(
+      FloatingButtonAlignment.centerLeft => Offset(
           paddingLeft,
-          paddingTop + (areaSize.height - Anchor.size) / 2,
+          paddingTop + (areaSize.height - FloatingButton.size) / 2,
         ),
-      AnchorAlignment.centerRight => Offset(
-          paddingLeft + areaSize.width - Anchor.size,
-          paddingTop + (areaSize.height - Anchor.size) / 2,
+      FloatingButtonAlignment.centerRight => Offset(
+          paddingLeft + areaSize.width - FloatingButton.size,
+          paddingTop + (areaSize.height - FloatingButton.size) / 2,
         ),
-      AnchorAlignment.bottomLeft => Offset(
+      FloatingButtonAlignment.bottomLeft => Offset(
           paddingLeft,
-          paddingTop + areaSize.height - Anchor.size,
+          paddingTop + areaSize.height - FloatingButton.size,
         ),
-      AnchorAlignment.bottomCenter => Offset(
-          paddingLeft + (areaSize.width - Anchor.size) / 2,
-          paddingTop + areaSize.height - Anchor.size,
+      FloatingButtonAlignment.bottomCenter => Offset(
+          paddingLeft + (areaSize.width - FloatingButton.size) / 2,
+          paddingTop + areaSize.height - FloatingButton.size,
         ),
-      AnchorAlignment.bottomRight => Offset(
-          paddingLeft + areaSize.width - Anchor.size,
-          paddingTop + areaSize.height - Anchor.size,
+      FloatingButtonAlignment.bottomRight => Offset(
+          paddingLeft + areaSize.width - FloatingButton.size,
+          paddingTop + areaSize.height - FloatingButton.size,
         )
     };
   }

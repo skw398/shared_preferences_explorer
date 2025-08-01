@@ -30,7 +30,7 @@ void main() async {
   runApp(
     const SharedPreferencesExplorer(
       // /*Optional*/ instance:
-      // /*Optional*/ initialAnchorAlignment:
+      // /*Optional*/ initialFloatingButtonAlignment:
       child: MyApp(),
     ),
     //

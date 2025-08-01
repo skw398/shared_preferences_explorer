@@ -1,5 +1,5 @@
-/// The position of the draggable anchor button
-enum AnchorAlignment {
+/// The position of the draggable floating button
+enum FloatingButtonAlignment {
   topLeft,
   topCenter,
   topRight,

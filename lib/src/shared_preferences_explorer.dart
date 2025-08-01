@@ -1,24 +1,24 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shared_preferences_explorer/src/anchor.dart';
-import 'package:shared_preferences_explorer/src/anchor_alignment.dart';
 import 'package:shared_preferences_explorer/src/filter.dart';
+import 'package:shared_preferences_explorer/src/floating_button.dart';
+import 'package:shared_preferences_explorer/src/floating_button_alignment.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_instance_container.dart';
 
-export 'anchor_alignment.dart';
+export 'floating_button_alignment.dart';
 
 class SharedPreferencesExplorer extends _SharedPreferencesExplorerBase {
   /// Use this if you are using [SharedPreferences] in your app.
   ///
-  /// Wrap your app's root widget. and tap the anchor button to open.
+  /// Wrap your app's root widget. and tap the floating button to open.
   ///
   /// You can optionally provide a [SharedPreferences] instance to the
   /// [instance] parameter. If not provided, `SharedPreferences.getInstance()`
   /// will be used.
   ///
-  /// The anchor button is draggable, and the initial position can be set using
-  /// [initialAnchorAlignment].
+  /// The floating button is draggable, and the initial position can be set
+  /// using [initialFloatingButtonAlignment].
   ///
   /// ```dart
   /// void main() {
@@ -32,7 +32,7 @@ class SharedPreferencesExplorer extends _SharedPreferencesExplorerBase {
   const SharedPreferencesExplorer({
     super.key,
     this.instance,
-    this.initialAnchorAlignment = AnchorAlignment.bottomLeft,
+    this.initialFloatingButtonAlignment = FloatingButtonAlignment.bottomLeft,
     required this.child,
   });
 
@@ -40,14 +40,15 @@ class SharedPreferencesExplorer extends _SharedPreferencesExplorerBase {
   /// If not provided, `SharedPreferences.getInstance()` will be used.
   final SharedPreferences? instance;
 
-  /// The initial position for the draggable anchor button
-  final AnchorAlignment? initialAnchorAlignment;
+  /// The initial position for the draggable floating button
+  final FloatingButtonAlignment? initialFloatingButtonAlignment;
 
   /// The root widget of your application
   final Widget child;
 
   @override
-  AnchorAlignment get _initialAnchorAlignment => initialAnchorAlignment!;
+  FloatingButtonAlignment get _initialFloatingButtonAlignment =>
+      initialFloatingButtonAlignment!;
 
   @override
   Widget get _child => child;
@@ -74,14 +75,14 @@ class SharedPreferencesAsyncExplorer extends _SharedPreferencesExplorerBase {
   /// Note that the cache feature of [SharedPreferencesWithCache] is ignored,
   /// and the latest value is always retrieved.
   ///
-  /// Wrap your app's root widget. and tap the anchor button to open.
+  /// Wrap your app's root widget. and tap the floating button to open.
   ///
   /// You can optionally provide a [SharedPreferencesAsync] instance to the
   /// [instance] parameter. If not provided, `SharedPreferencesAsync()` will be
   /// used.
   ///
-  /// The anchor button is draggable, and the initial position can be set using
-  /// [initialAnchorAlignment].
+  /// The floating button is draggable, and the initial position can be set
+  /// using [initialFloatingButtonAlignment].
   ///
   /// ```dart
   /// void main() {
@@ -95,7 +96,7 @@ class SharedPreferencesAsyncExplorer extends _SharedPreferencesExplorerBase {
   const SharedPreferencesAsyncExplorer({
     super.key,
     this.instance,
-    this.initialAnchorAlignment = AnchorAlignment.bottomLeft,
+    this.initialFloatingButtonAlignment = FloatingButtonAlignment.bottomLeft,
     required this.child,
   });
 
@@ -103,14 +104,15 @@ class SharedPreferencesAsyncExplorer extends _SharedPreferencesExplorerBase {
   /// If not provided, `SharedPreferencesAsync()` will be used.
   final SharedPreferencesAsync? instance;
 
-  /// The initial position for the draggable anchor button
-  final AnchorAlignment? initialAnchorAlignment;
+  /// The initial position for the draggable floating button
+  final FloatingButtonAlignment? initialFloatingButtonAlignment;
 
   /// The root widget of your application
   final Widget child;
 
   @override
-  AnchorAlignment get _initialAnchorAlignment => initialAnchorAlignment!;
+  FloatingButtonAlignment get _initialFloatingButtonAlignment =>
+      initialFloatingButtonAlignment!;
 
   @override
   Widget get _child => child;
@@ -134,7 +136,7 @@ class _SharedPreferencesAsyncExplorerState
 abstract class _SharedPreferencesExplorerBase extends StatefulWidget {
   const _SharedPreferencesExplorerBase({super.key});
 
-  AnchorAlignment get _initialAnchorAlignment;
+  FloatingButtonAlignment get _initialFloatingButtonAlignment;
 
   Widget get _child;
 }
@@ -167,14 +169,14 @@ abstract class _SharedPreferencesExplorerBaseState<
                 return const SizedBox.shrink();
               }
 
-              return Anchor(
+              return FloatingButton(
                 instanceContainer: instanceContainer,
                 colorScheme: ThemeData(
                   colorSchemeSeed: colorSchemeSeed,
                   brightness: MediaQuery.platformBrightnessOf(context),
                 ).colorScheme,
                 navigatorKey: _navigatorKey,
-                initialAnchorAlignment: widget._initialAnchorAlignment,
+                initialAlignment: widget._initialFloatingButtonAlignment,
               );
             },
           ),
