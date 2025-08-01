@@ -1,6 +1,6 @@
 name: shared_preferences_explorer
 description: "A Flutter package for on-screen viewing of shared_preferences. Supports SharedPreferences, SharedPreferencesAsync, and SharedPreferencesWithCache."
-version: 0.2.1
+version: 0.3.0
 repository: https://github.com/skw398/shared_preferences_explorer
 
 environment:

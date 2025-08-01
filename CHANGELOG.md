@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Change parameter name.
+
 ## 0.2.1
 
 * Add JSON export feature.
