@@ -207,7 +207,7 @@ class _PreferenceCard extends StatelessWidget {
                 ValueTypeLabel(type: preference.valueType),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Text(
+                  child: SelectableText(
                     preference.key,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
@@ -218,7 +218,7 @@ class _PreferenceCard extends StatelessWidget {
             const SizedBox(height: 4),
             Padding(
               padding: const EdgeInsets.only(left: 4),
-              child: Text(
+              child: SelectableText(
                 isLong
                     // ignore: lines_longer_than_80_chars
                     ? '${preference.value.toString().substring(0, maxLength)}...'
@@ -246,7 +246,9 @@ class _PreferenceCard extends StatelessWidget {
                                 child: Padding(
                                   padding:
                                       const EdgeInsets.symmetric(horizontal: 4),
-                                  child: Text(preference.value.toString()),
+                                  child: SelectableText(
+                                    preference.value.toString(),
+                                  ),
                                 ),
                               ),
                             ),
