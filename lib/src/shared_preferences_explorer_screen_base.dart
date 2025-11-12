@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:shared_preferences_explorer/src/export_menu_button.dart';
 import 'package:shared_preferences_explorer/src/filter.dart';
 import 'package:shared_preferences_explorer/src/preference.dart';
 import 'package:shared_preferences_explorer/src/preferences.dart';
@@ -92,49 +90,7 @@ class _SharedPreferencesExplorerScreenBaseState
         ),
         titleSpacing: canPop ? 0 : 16,
         actions: [
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert),
-            itemBuilder: (context) => [
-              const PopupMenuItem(
-                value: 'copy',
-                child: ListTile(
-                  leading: Icon(Icons.content_copy),
-                  title: Text('Copy as JSON'),
-                ),
-              ),
-              const PopupMenuItem(
-                value: 'dump',
-                child: ListTile(
-                  leading: Icon(Icons.terminal),
-                  title: Text('Dump as JSON'),
-                ),
-              ),
-            ],
-            onSelected: (value) async {
-              final preferences = <String, dynamic>{};
-              for (final preference in filteredPreferences) {
-                preferences[preference.key] = preference.value;
-              }
-              final formatted =
-                  const JsonEncoder.withIndent('  ').convert(preferences);
-
-              if (value == 'copy') {
-                await Clipboard.setData(ClipboardData(text: formatted));
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Copied to clipboard')),
-                  );
-                }
-              } else if (value == 'dump') {
-                debugPrint(formatted);
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Dumped to console')),
-                  );
-                }
-              }
-            },
-          ),
+          ExportMenuButton(preferences: filteredPreferences),
           const SizedBox(width: 8),
         ],
         leading: canPop
@@ -242,7 +198,7 @@ class _PreferenceCard extends StatelessWidget {
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+        padding: const EdgeInsets.fromLTRB(16, 4, 4, 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -256,9 +212,10 @@ class _PreferenceCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
+                ExportMenuButton(preferences: [preference]),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 4),
             Padding(
               padding: const EdgeInsets.only(left: 4),
               child: Text(
