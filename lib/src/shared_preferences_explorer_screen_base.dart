@@ -77,10 +77,6 @@ class _SharedPreferencesExplorerScreenBaseState
 
     return Scaffold(
       appBar: AppBar(
-        bottom: const PreferredSize(
-          preferredSize: Size.fromHeight(1),
-          child: Divider(height: 1),
-        ),
         title: TextField(
           controller: _controller,
           decoration: const InputDecoration(
@@ -106,20 +102,19 @@ class _SharedPreferencesExplorerScreenBaseState
         child: ListView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: _FilterChips(
-                filter: filter,
-                onSelected: (valueType, {required isSelected}) {
-                  final valueTypes = List<ValueType>.from(filter.valueTypes);
-                  isSelected
-                      ? valueTypes.add(valueType)
-                      : valueTypes.remove(valueType);
-                  Filter.of(context).state =
-                      filter.copyWith(valueTypes: valueTypes);
-                },
-              ),
+            const SizedBox(height: 8),
+            _FilterChips(
+              filter: filter,
+              onSelected: (valueType, {required isSelected}) {
+                final valueTypes = List<ValueType>.from(filter.valueTypes);
+                isSelected
+                    ? valueTypes.add(valueType)
+                    : valueTypes.remove(valueType);
+                Filter.of(context).state =
+                    filter.copyWith(valueTypes: valueTypes);
+              },
             ),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
@@ -137,6 +132,7 @@ class _SharedPreferencesExplorerScreenBaseState
                 child: _PreferenceCard(preference: preference),
               );
             }),
+            const SizedBox(height: 8),
           ],
         ),
       ),
@@ -197,12 +193,12 @@ class _PreferenceCard extends StatelessWidget {
     final isLong = preference.value.toString().length > maxLength;
 
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 4, 4, 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Row(
               children: [
                 ValueTypeLabel(type: preference.valueType),
                 const SizedBox(width: 8),
@@ -215,20 +211,21 @@ class _PreferenceCard extends StatelessWidget {
                 ExportMenuButton(preferences: [preference]),
               ],
             ),
-            const SizedBox(height: 4),
-            Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: SelectableText(
-                isLong
-                    // ignore: lines_longer_than_80_chars
-                    ? '${preference.value.toString().substring(0, maxLength)}...'
-                    : preference.value.toString(),
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SelectableText(
+              isLong
+                  ? '${preference.value.toString().substring(0, maxLength)}...'
+                  : preference.value.toString(),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
             ),
-            Row(
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8, bottom: 2),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 if (preference.value is List<String>)
@@ -280,9 +277,9 @@ class _PreferenceCard extends StatelessWidget {
                 else
                   const SizedBox(height: 8),
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
