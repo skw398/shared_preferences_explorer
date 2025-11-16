@@ -244,32 +244,12 @@ class _PreferenceCard extends StatelessWidget {
                 else if (isLong)
                   TextButton(
                     onPressed: () async {
-                      await showDialog<void>(
-                        context: context,
-                        builder: (context) {
-                          final controller = ScrollController();
-                          return AlertDialog(
-                            content: Scrollbar(
-                              controller: controller,
-                              child: SingleChildScrollView(
-                                controller: controller,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 4),
-                                  child: SelectableText(
-                                    preference.value.toString(),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: const Text('Close'),
-                              ),
-                            ],
-                          );
-                        },
+                      await Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (context) => _StringViewScreen(
+                            preference: preference,
+                          ),
+                        ),
                       );
                     },
                     child: const Text('Show all'),
@@ -337,6 +317,31 @@ class _StringListViewScreenState extends State<_StringListViewScreen> {
               subtitle: SelectableText(_items[index]),
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class _StringViewScreen extends StatelessWidget {
+  const _StringViewScreen({required this.preference});
+
+  final Preference preference;
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        brightness: MediaQuery.platformBrightnessOf(context),
+      ),
+      child: Scaffold(
+        appBar: AppBar(title: Text(preference.key)),
+        body: Scrollbar(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: SelectableText(preference.value.toString()),
+          ),
         ),
       ),
     );
