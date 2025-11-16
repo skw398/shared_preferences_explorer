@@ -228,10 +228,23 @@ class _PreferenceCard extends StatelessWidget {
                     ),
               ),
             ),
-            if (isLong)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (preference.value is List<String>)
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (context) => _StringListViewScreen(
+                            preference: preference,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text('Show as list'),
+                  )
+                else if (isLong)
                   TextButton(
                     onPressed: () async {
                       await showDialog<void>(
@@ -263,12 +276,70 @@ class _PreferenceCard extends StatelessWidget {
                       );
                     },
                     child: const Text('Show all'),
-                  ),
-                ],
-              )
-            else
-              const SizedBox(height: 8),
+                  )
+                else
+                  const SizedBox(height: 8),
+              ],
+            )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StringListViewScreen extends StatefulWidget {
+  const _StringListViewScreen({required this.preference});
+
+  final Preference preference;
+
+  @override
+  State<_StringListViewScreen> createState() => _StringListViewScreenState();
+}
+
+class _StringListViewScreenState extends State<_StringListViewScreen> {
+  late List<String> _items;
+  bool _isReversed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _items = List<String>.from(widget.preference.value as List<String>);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        brightness: MediaQuery.platformBrightnessOf(context),
+      ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.preference.key),
+          actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  _isReversed = !_isReversed;
+                  _items = _items.reversed.toList();
+                });
+              },
+              icon: const Icon(Icons.swap_vert),
+            ),
+            const SizedBox(width: 8),
+          ],
+        ),
+        body: ListView.builder(
+          itemCount: _items.length,
+          itemBuilder: (context, index) {
+            final originalIndex =
+                _isReversed ? _items.length - 1 - index : index;
+            return ListTile(
+              title: SelectableText(originalIndex.toString()),
+              subtitle: SelectableText(_items[index]),
+            );
+          },
         ),
       ),
     );
