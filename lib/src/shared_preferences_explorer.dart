@@ -171,10 +171,8 @@ abstract class _SharedPreferencesExplorerBaseState<
 
               return FloatingButton(
                 instanceContainer: instanceContainer,
-                colorScheme: ThemeData(
-                  colorSchemeSeed: colorSchemeSeed,
-                  brightness: MediaQuery.platformBrightnessOf(context),
-                ).colorScheme,
+                colorScheme:
+                    ThemeData(colorSchemeSeed: colorSchemeSeed).colorScheme,
                 navigatorKey: _navigatorKey,
                 initialAlignment: widget._initialFloatingButtonAlignment,
               );

@@ -3,6 +3,7 @@ import 'package:shared_preferences_explorer/src/export_menu_button.dart';
 import 'package:shared_preferences_explorer/src/filter.dart';
 import 'package:shared_preferences_explorer/src/preference.dart';
 import 'package:shared_preferences_explorer/src/preferences.dart';
+import 'package:shared_preferences_explorer/src/shared_preferences_explorer_theme.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_instance_container.dart';
 import 'package:shared_preferences_explorer/src/value_type.dart';
 import 'package:shared_preferences_explorer/src/value_type_label.dart';
@@ -17,23 +18,17 @@ class SharedPreferencesExplorerScreenBaseStarter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        colorSchemeSeed: Colors.blue,
-        brightness: MediaQuery.platformBrightnessOf(context),
-      ),
-      child: FutureBuilder<Preferences>(
-        future: Preferences.init(instanceContainer: instanceContainer),
-        builder: (context, snapshot) {
-          final preferences = snapshot.data;
-          if (preferences == null) {
-            return const Scaffold(
-              body: Center(child: Text('Loading...')),
-            );
-          }
-          return _SharedPreferencesExplorerScreenBase(preferences: preferences);
-        },
-      ),
+    return FutureBuilder<Preferences>(
+      future: Preferences.init(instanceContainer: instanceContainer),
+      builder: (context, snapshot) {
+        final preferences = snapshot.data;
+        if (preferences == null) {
+          return const Scaffold(
+            body: Center(child: Text('Loading...')),
+          );
+        }
+        return _SharedPreferencesExplorerScreenBase(preferences: preferences);
+      },
     );
   }
 }
@@ -75,65 +70,67 @@ class _SharedPreferencesExplorerScreenBaseState
       _initialized = true;
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: TextField(
-          controller: _controller,
-          decoration: const InputDecoration(
-            border: InputBorder.none,
-            hintText: 'Search key or value',
+    return SharedPreferencesExplorerTheme(
+      child: Scaffold(
+        appBar: AppBar(
+          title: TextField(
+            controller: _controller,
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Search key or value',
+            ),
           ),
-        ),
-        titleSpacing: canPop ? 0 : 16,
-        actions: [
-          ExportMenuButton(preferences: filteredPreferences),
-          const SizedBox(width: 8),
-        ],
-        leading: canPop
-            ? IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                tooltip: 'Close',
-                icon: const Icon(Icons.arrow_back),
-              )
-            : null,
-      ),
-      body: SafeArea(
-        bottom: false,
-        child: ListView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          children: [
-            const SizedBox(height: 8),
-            _FilterChips(
-              filter: filter,
-              onSelected: (valueType, {required isSelected}) {
-                final valueTypes = List<ValueType>.from(filter.valueTypes);
-                isSelected
-                    ? valueTypes.add(valueType)
-                    : valueTypes.remove(valueType);
-                Filter.of(context).state =
-                    filter.copyWith(valueTypes: valueTypes);
-              },
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Text('${filteredPreferences.length} results'),
-                ],
-              ),
-            ),
-            ...filteredPreferences.map((preference) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 2,
-                  horizontal: 12,
-                ),
-                child: _PreferenceCard(preference: preference),
-              );
-            }),
-            const SizedBox(height: 8),
+          titleSpacing: canPop ? 0 : 16,
+          actions: [
+            ExportMenuButton(preferences: filteredPreferences),
+            const SizedBox(width: 8),
           ],
+          leading: canPop
+              ? IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  tooltip: 'Close',
+                  icon: const Icon(Icons.arrow_back),
+                )
+              : null,
+        ),
+        body: SafeArea(
+          bottom: false,
+          child: ListView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            children: [
+              const SizedBox(height: 8),
+              _FilterChips(
+                filter: filter,
+                onSelected: (valueType, {required isSelected}) {
+                  final valueTypes = List<ValueType>.from(filter.valueTypes);
+                  isSelected
+                      ? valueTypes.add(valueType)
+                      : valueTypes.remove(valueType);
+                  Filter.of(context).state =
+                      filter.copyWith(valueTypes: valueTypes);
+                },
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Text('${filteredPreferences.length} results'),
+                  ],
+                ),
+              ),
+              ...filteredPreferences.map((preference) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 2,
+                    horizontal: 12,
+                  ),
+                  child: _PreferenceCard(preference: preference),
+                );
+              }),
+              const SizedBox(height: 8),
+            ],
+          ),
         ),
       ),
     );
@@ -286,11 +283,7 @@ class _StringListViewScreenState extends State<_StringListViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        colorSchemeSeed: Colors.blue,
-        brightness: MediaQuery.platformBrightnessOf(context),
-      ),
+    return SharedPreferencesExplorerTheme(
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.preference.key),
@@ -330,11 +323,7 @@ class _StringViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        colorSchemeSeed: Colors.blue,
-        brightness: MediaQuery.platformBrightnessOf(context),
-      ),
+    return SharedPreferencesExplorerTheme(
       child: Scaffold(
         appBar: AppBar(title: Text(preference.key)),
         body: Scrollbar(

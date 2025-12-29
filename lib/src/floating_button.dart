@@ -78,12 +78,12 @@ class _FloatingButtonState extends State<FloatingButton> {
               child: FloatingActionButton(
                 foregroundColor: widget.colorScheme.onPrimaryContainer,
                 backgroundColor: widget.colorScheme.primaryContainer,
-                splashColor:
-                    widget.colorScheme.onPrimaryContainer.withOpacity(0.12),
-                focusColor:
-                    widget.colorScheme.onPrimaryContainer.withOpacity(0.12),
-                hoverColor:
-                    widget.colorScheme.onPrimaryContainer.withOpacity(0.08),
+                splashColor: widget.colorScheme.onPrimaryContainer
+                    .withValues(alpha: 0.12),
+                focusColor: widget.colorScheme.onPrimaryContainer
+                    .withValues(alpha: 0.12),
+                hoverColor: widget.colorScheme.onPrimaryContainer
+                    .withValues(alpha: 0.08),
                 onPressed: _isNavigating
                     ? null
                     : () async {
