@@ -1,3 +1,9 @@
+## 0.4.0
+
+* Update minimum supported SDK version to Flutter 3.27/Dart 3.6.
+* Make text selectable.
+* Other improvements.
+
 ## 0.3.0
 
 * Change parameter name.
