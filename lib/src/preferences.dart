@@ -1,8 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences_explorer/src/filter.dart';
 import 'package:shared_preferences_explorer/src/preference.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_instance_container.dart';
 
 class Preferences {
+  @visibleForTesting
+  Preferences(this._preferences);
+
   Preferences._(this._preferences);
 
   final List<Preference> _preferences;
