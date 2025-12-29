@@ -6,7 +6,7 @@ Supports `SharedPreferences`, `SharedPreferencesAsync`, and `SharedPreferencesWi
 | <img width="240" src="https://github.com/skw398/shared_preferences_explorer/blob/main/assets/screenshot1.png?raw=true"> | <img width="240" src="https://github.com/skw398/shared_preferences_explorer/blob/main/assets/screenshot2.png?raw=true"> |
 | - | - |
 
-## Usage
+## APIs
 
 | | 1. Floating button widget | 2. Screen widget |
 | - | - | - |
@@ -14,11 +14,12 @@ Supports `SharedPreferences`, `SharedPreferencesAsync`, and `SharedPreferencesWi
 | SharedPreferencesAsync | SharedPreferencesAsyncExplorer | SharedPreferencesExplorerAsyncScreen |
 | SharedPreferencesWithCache | SharedPreferencesAsyncExplorer *(cache is ignored)* | SharedPreferencesExplorerAsyncScreen *(cache is ignored)* |
 
----
+## Usage
 
 ### 1. Floating button widget
 
 Wrap your app's root widget with `SharedPreferencesExplorer` or `SharedPreferencesAsyncExplorer`, and tap the floating button to open.
+You can access it from anywhere in your app.
 
 ```dart
 void main() {
@@ -38,7 +39,7 @@ void main() {
 
 ### 2. Screen widget
 
-Use `SharedPreferencesExplorerScreen` or `SharedPreferencesExplorerAsyncScreen` anywhere in your app.
+Use `SharedPreferencesExplorerScreen` or `SharedPreferencesExplorerAsyncScreen` in places like your app's debug menu.
 
 ```dart
 Navigator.of(context).push(
