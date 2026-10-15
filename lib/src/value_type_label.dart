@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences_explorer/src/value_type.dart';
 
 class ValueTypeLabel extends StatelessWidget {

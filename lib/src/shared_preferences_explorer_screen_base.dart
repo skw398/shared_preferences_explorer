@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences_explorer/src/export_menu_button.dart';
 import 'package:shared_preferences_explorer/src/filter.dart';
 import 'package:shared_preferences_explorer/src/preference.dart';

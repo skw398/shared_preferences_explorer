@@ -4,12 +4,13 @@ version: 0.4.0
 repository: https://github.com/skw398/shared_preferences_explorer
 
 environment:
-  sdk: '>=3.6.0 <4.0.0'
-  flutter: ">=3.27.0"
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  material_ui: ^1.7.0
   shared_preferences: ^2.3.0
 
 dev_dependencies:

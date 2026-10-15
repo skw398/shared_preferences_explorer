@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_explorer/src/filter.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_explorer_screen_base.dart';
