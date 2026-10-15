@@ -1,10 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
-class SharedPreferencesExplorerTheme extends StatelessWidget {
-  const SharedPreferencesExplorerTheme({super.key, required this.child});
-
-  final Widget child;
-
+class const SharedPreferencesExplorerTheme({
+  super.key,
+  required final Widget child,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(

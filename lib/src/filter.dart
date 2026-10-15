@@ -1,12 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences_explorer/src/value_type.dart';
 
-class Filter {
-  const Filter({this.valueTypes = const [], this.searchText = ''});
-
-  final List<ValueType> valueTypes;
-  final String searchText;
-
+class const Filter({
+  final List<ValueType> valueTypes = const [],
+  final String searchText = '',
+}) {
   Filter copyWith({List<ValueType>? valueTypes, String? searchText}) {
     return Filter(
       valueTypes: valueTypes ?? this.valueTypes,
@@ -24,16 +22,11 @@ class Filter {
   }
 }
 
-class FilterContext extends StatefulWidget {
-  const FilterContext({
-    required this.child,
-    super.key,
-    this.filter = const Filter(),
-  });
-
-  final Widget child;
-  final Filter filter;
-
+class const FilterContext({
+  required final Widget child,
+  super.key,
+  final Filter filter = const Filter(),
+}) extends StatefulWidget {
   @override
   FilterContextState createState() => FilterContextState();
 }
@@ -72,8 +65,5 @@ class FilterNotifier extends ChangeNotifier {
 }
 
 class _FilterProviderInherited extends InheritedNotifier<FilterNotifier> {
-  const _FilterProviderInherited({
-    required FilterNotifier super.notifier,
-    required super.child,
-  });
+  const new({required FilterNotifier super.notifier, required super.child});
 }

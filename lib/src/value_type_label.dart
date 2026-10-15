@@ -1,11 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences_explorer/src/value_type.dart';
 
-class ValueTypeLabel extends StatelessWidget {
-  const ValueTypeLabel({required this.type, super.key});
-
-  final ValueType type;
-
+class const ValueTypeLabel({required final ValueType type, super.key})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

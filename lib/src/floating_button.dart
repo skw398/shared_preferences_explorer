@@ -3,20 +3,13 @@ import 'package:shared_preferences_explorer/shared_preferences_explorer.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_explorer_screen_base.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_instance_container.dart';
 
-class FloatingButton extends StatefulWidget {
-  const FloatingButton({
-    required this.instanceContainer,
-    required this.colorScheme,
-    required this.navigatorKey,
-    required this.initialAlignment,
-    super.key,
-  });
-
-  final SharedPreferencesInstanceContainer instanceContainer;
-  final ColorScheme colorScheme;
-  final GlobalKey<NavigatorState> navigatorKey;
-  final FloatingButtonAlignment initialAlignment;
-
+class const FloatingButton({
+  required final SharedPreferencesInstanceContainer instanceContainer,
+  required final ColorScheme colorScheme,
+  required final GlobalKey<NavigatorState> navigatorKey,
+  required final FloatingButtonAlignment initialAlignment,
+  super.key,
+}) extends StatefulWidget {
   @override
   State<FloatingButton> createState() => _FloatingButtonState();
 

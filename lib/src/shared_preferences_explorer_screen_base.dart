@@ -8,14 +8,10 @@ import 'package:shared_preferences_explorer/src/shared_preferences_instance_cont
 import 'package:shared_preferences_explorer/src/value_type.dart';
 import 'package:shared_preferences_explorer/src/value_type_label.dart';
 
-class SharedPreferencesExplorerScreenBaseStarter extends StatelessWidget {
-  const SharedPreferencesExplorerScreenBaseStarter({
-    required this.instanceContainer,
-    super.key,
-  });
-
-  final SharedPreferencesInstanceContainer instanceContainer;
-
+class const SharedPreferencesExplorerScreenBaseStarter({
+  required final SharedPreferencesInstanceContainer instanceContainer,
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Preferences>(
@@ -31,11 +27,9 @@ class SharedPreferencesExplorerScreenBaseStarter extends StatelessWidget {
   }
 }
 
-class _SharedPreferencesExplorerScreenBase extends StatefulWidget {
-  const _SharedPreferencesExplorerScreenBase({required this.preferences});
-
-  final Preferences preferences;
-
+class const _SharedPreferencesExplorerScreenBase({
+  required final Preferences preferences,
+}) extends StatefulWidget {
   @override
   State<_SharedPreferencesExplorerScreenBase> createState() =>
       _SharedPreferencesExplorerScreenBaseState();
@@ -253,11 +247,8 @@ class _PreferenceCard extends StatelessWidget {
   }
 }
 
-class _StringListViewScreen extends StatefulWidget {
-  const _StringListViewScreen({required this.preference});
-
-  final Preference preference;
-
+class const _StringListViewScreen({required final Preference preference})
+    extends StatefulWidget {
   @override
   State<_StringListViewScreen> createState() => _StringListViewScreenState();
 }
@@ -308,11 +299,8 @@ class _StringListViewScreenState extends State<_StringListViewScreen> {
   }
 }
 
-class _StringViewScreen extends StatelessWidget {
-  const _StringViewScreen({required this.preference});
-
-  final Preference preference;
-
+class const _StringViewScreen({required final Preference preference})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SharedPreferencesExplorerTheme(

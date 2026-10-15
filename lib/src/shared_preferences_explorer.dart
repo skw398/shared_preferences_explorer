@@ -8,7 +8,12 @@ import 'package:shared_preferences_explorer/src/shared_preferences_instance_cont
 
 export 'floating_button_alignment.dart';
 
-class SharedPreferencesExplorer extends _SharedPreferencesExplorerBase {
+class const SharedPreferencesExplorer({
+  super.key,
+  final SharedPreferences? instance,
+  final FloatingButtonAlignment? initialFloatingButtonAlignment = .bottomLeft,
+  required final Widget child,
+}) extends _SharedPreferencesExplorerBase {
   /// Use this if you are using [SharedPreferences] in your app.
   ///
   /// Wrap your app's root widget. and tap the floating button to open.
@@ -29,23 +34,6 @@ class SharedPreferencesExplorer extends _SharedPreferencesExplorerBase {
   ///   );
   /// }
   /// ```
-  const SharedPreferencesExplorer({
-    super.key,
-    this.instance,
-    this.initialFloatingButtonAlignment = .bottomLeft,
-    required this.child,
-  });
-
-  /// Optional [SharedPreferences] instance to use.
-  /// If not provided, `SharedPreferences.getInstance()` will be used.
-  final SharedPreferences? instance;
-
-  /// The initial position for the draggable floating button
-  final FloatingButtonAlignment? initialFloatingButtonAlignment;
-
-  /// The root widget of your application
-  final Widget child;
-
   @override
   FloatingButtonAlignment get _initialFloatingButtonAlignment =>
       initialFloatingButtonAlignment!;
@@ -69,7 +57,12 @@ class _SharedPreferencesExplorerState
   }
 }
 
-class SharedPreferencesAsyncExplorer extends _SharedPreferencesExplorerBase {
+class const SharedPreferencesAsyncExplorer({
+  super.key,
+  final SharedPreferencesAsync? instance,
+  final FloatingButtonAlignment? initialFloatingButtonAlignment = .bottomLeft,
+  required final Widget child,
+}) extends _SharedPreferencesExplorerBase {
   /// Use this if you are using [SharedPreferencesAsync] or
   /// [SharedPreferencesWithCache].
   /// Note that the cache feature of [SharedPreferencesWithCache] is ignored,
@@ -93,23 +86,6 @@ class SharedPreferencesAsyncExplorer extends _SharedPreferencesExplorerBase {
   ///   );
   /// }
   /// ```
-  const SharedPreferencesAsyncExplorer({
-    super.key,
-    this.instance,
-    this.initialFloatingButtonAlignment = .bottomLeft,
-    required this.child,
-  });
-
-  /// Optional [SharedPreferencesAsync] instance to use.
-  /// If not provided, `SharedPreferencesAsync()` will be used.
-  final SharedPreferencesAsync? instance;
-
-  /// The initial position for the draggable floating button
-  final FloatingButtonAlignment? initialFloatingButtonAlignment;
-
-  /// The root widget of your application
-  final Widget child;
-
   @override
   FloatingButtonAlignment get _initialFloatingButtonAlignment =>
       initialFloatingButtonAlignment!;
@@ -134,7 +110,7 @@ class _SharedPreferencesAsyncExplorerState
 }
 
 abstract class _SharedPreferencesExplorerBase extends StatefulWidget {
-  const _SharedPreferencesExplorerBase({super.key});
+  const new({super.key});
 
   FloatingButtonAlignment get _initialFloatingButtonAlignment;
 
@@ -187,11 +163,9 @@ abstract class _SharedPreferencesExplorerBaseState<
   }
 }
 
-class _RouteContainer extends StatefulWidget {
-  const _RouteContainer({required this.navigatorKey});
-
-  final GlobalKey<NavigatorState> navigatorKey;
-
+class const _RouteContainer({
+  required final GlobalKey<NavigatorState> navigatorKey,
+}) extends StatefulWidget {
   @override
   State<_RouteContainer> createState() => _RouteContainerState();
 }
@@ -228,7 +202,7 @@ class _RouteContainerState extends State<_RouteContainer> {
 }
 
 class _NavigatorObserver extends RouteObserver {
-  _NavigatorObserver({required this.onStateChange, required this.navigatorKey});
+  new({required this.onStateChange, required this.navigatorKey});
 
   final void Function({required bool isPageOpen}) onStateChange;
   final GlobalKey<NavigatorState> navigatorKey;
