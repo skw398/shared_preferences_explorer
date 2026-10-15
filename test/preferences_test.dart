@@ -93,9 +93,7 @@ void main() {
       expect(userPrefs[0].key, 'user_age');
       expect(userPrefs[1].key, 'user_name');
 
-      final intPrefs = prefs.filtered(
-        const Filter(valueTypes: [ValueType.intOrDouble]),
-      );
+      final intPrefs = prefs.filtered(const Filter(valueTypes: [.intOrDouble]));
       expect(intPrefs.length, 2);
       expect(intPrefs[0].key, 'admin_level');
       expect(intPrefs[1].key, 'user_age');
@@ -196,7 +194,7 @@ void main() {
         Preference.fromKey('key4', 3.14),
       ]);
 
-      const filter = Filter(valueTypes: [ValueType.intOrDouble]);
+      const filter = Filter(valueTypes: [.intOrDouble]);
 
       final result = prefs.filtered(filter);
 
@@ -302,10 +300,7 @@ void main() {
         Preference.fromKey('admin_name', 'Alice'),
       ]);
 
-      const filter = Filter(
-        valueTypes: [ValueType.intOrDouble],
-        searchText: 'user',
-      );
+      const filter = Filter(valueTypes: [.intOrDouble], searchText: 'user');
 
       final result = prefs.filtered(filter);
 
@@ -334,7 +329,7 @@ void main() {
         Preference.fromKey('key2', 'value2'),
       ]);
 
-      const filter = Filter(valueTypes: [ValueType.intOrDouble]);
+      const filter = Filter(valueTypes: [.intOrDouble]);
 
       final result = prefs.filtered(filter);
 
@@ -364,7 +359,7 @@ void main() {
       ]);
 
       const filter = Filter(
-        valueTypes: [ValueType.string, ValueType.bool, ValueType.stringList],
+        valueTypes: [.string, ValueType.bool, ValueType.stringList],
       );
 
       final result = prefs.filtered(filter);

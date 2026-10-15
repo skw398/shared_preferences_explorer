@@ -10,13 +10,13 @@ enum ValueType {
 
   factory ValueType.from(core.Object? value) {
     if (value is core.int || value is core.double) {
-      return ValueType.intOrDouble;
+      return .intOrDouble;
     } else if (value is core.bool) {
-      return ValueType.bool;
+      return .bool;
     } else if (value is core.String) {
-      return ValueType.string;
+      return .string;
     } else if (value is core.List) {
-      return ValueType.stringList;
+      return .stringList;
     } else {
       throw core.AssertionError('Unexpected type');
     }

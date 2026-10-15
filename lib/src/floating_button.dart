@@ -39,7 +39,7 @@ class _FloatingButtonState extends State<FloatingButton> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.ltr,
+      textDirection: .ltr,
       child: Stack(
         children: [
           AnimatedPositioned(
@@ -144,32 +144,32 @@ extension on FloatingButtonAlignment {
     );
 
     return switch (this) {
-      FloatingButtonAlignment.topLeft => Offset(paddingLeft, paddingTop),
-      FloatingButtonAlignment.topCenter => Offset(
+      .topLeft => Offset(paddingLeft, paddingTop),
+      .topCenter => Offset(
         paddingLeft + (areaSize.width - FloatingButton.size) / 2,
         paddingTop,
       ),
-      FloatingButtonAlignment.topRight => Offset(
+      .topRight => Offset(
         paddingLeft + areaSize.width - FloatingButton.size,
         paddingTop,
       ),
-      FloatingButtonAlignment.centerLeft => Offset(
+      .centerLeft => Offset(
         paddingLeft,
         paddingTop + (areaSize.height - FloatingButton.size) / 2,
       ),
-      FloatingButtonAlignment.centerRight => Offset(
+      .centerRight => Offset(
         paddingLeft + areaSize.width - FloatingButton.size,
         paddingTop + (areaSize.height - FloatingButton.size) / 2,
       ),
-      FloatingButtonAlignment.bottomLeft => Offset(
+      .bottomLeft => Offset(
         paddingLeft,
         paddingTop + areaSize.height - FloatingButton.size,
       ),
-      FloatingButtonAlignment.bottomCenter => Offset(
+      .bottomCenter => Offset(
         paddingLeft + (areaSize.width - FloatingButton.size) / 2,
         paddingTop + areaSize.height - FloatingButton.size,
       ),
-      FloatingButtonAlignment.bottomRight => Offset(
+      .bottomRight => Offset(
         paddingLeft + areaSize.width - FloatingButton.size,
         paddingTop + areaSize.height - FloatingButton.size,
       ),

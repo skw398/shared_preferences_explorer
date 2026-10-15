@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           if (kDebugMode)
             Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const .only(right: 8),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
             Text(

@@ -75,7 +75,7 @@ class _SharedPreferencesExplorerScreenBaseState
           title: TextField(
             controller: _controller,
             decoration: const InputDecoration(
-              border: InputBorder.none,
+              border: .none,
               hintText: 'Search key or value',
             ),
           ),
@@ -95,7 +95,7 @@ class _SharedPreferencesExplorerScreenBaseState
         body: SafeArea(
           bottom: false,
           child: ListView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            keyboardDismissBehavior: .onDrag,
             children: [
               const SizedBox(height: 8),
               _FilterChips(
@@ -145,7 +145,7 @@ class _FilterChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+      scrollDirection: .horizontal,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
@@ -157,7 +157,7 @@ class _FilterChips extends StatelessWidget {
                 right: index == ValueType.values.length - 1 ? 0 : 8,
               ),
               child: FilterChip.elevated(
-                materialTapTargetSize: MaterialTapTargetSize.padded,
+                materialTapTargetSize: .padded,
                 label: Text(valueType.label),
                 selected: filter.valueTypes.contains(valueType),
                 onSelected: (isSelected) {
@@ -184,7 +184,7 @@ class _PreferenceCard extends StatelessWidget {
 
     return Card(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 16),
@@ -216,7 +216,7 @@ class _PreferenceCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8, right: 8, bottom: 2),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: .end,
               children: [
                 if (preference.value is List<String>)
                   TextButton(

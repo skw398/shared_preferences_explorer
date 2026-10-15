@@ -52,9 +52,9 @@ enum _Action {
     final formatted = const JsonEncoder.withIndent('  ').convert(data);
 
     switch (this) {
-      case _Action.copy:
+      case .copy:
         Clipboard.setData(ClipboardData(text: formatted));
-      case _Action.dump:
+      case .dump:
         debugPrint(formatted);
     }
   }

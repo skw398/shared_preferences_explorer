@@ -32,7 +32,7 @@ class SharedPreferencesExplorer extends _SharedPreferencesExplorerBase {
   const SharedPreferencesExplorer({
     super.key,
     this.instance,
-    this.initialFloatingButtonAlignment = FloatingButtonAlignment.bottomLeft,
+    this.initialFloatingButtonAlignment = .bottomLeft,
     required this.child,
   });
 
@@ -96,7 +96,7 @@ class SharedPreferencesAsyncExplorer extends _SharedPreferencesExplorerBase {
   const SharedPreferencesAsyncExplorer({
     super.key,
     this.instance,
-    this.initialFloatingButtonAlignment = FloatingButtonAlignment.bottomLeft,
+    this.initialFloatingButtonAlignment = .bottomLeft,
     required this.child,
   });
 
@@ -160,7 +160,7 @@ abstract class _SharedPreferencesExplorerBaseState<
 
     return FilterContext(
       child: Stack(
-        alignment: Alignment.center,
+        alignment: .center,
         children: [
           widget._child,
           FutureBuilder<SharedPreferencesInstanceContainer>(
