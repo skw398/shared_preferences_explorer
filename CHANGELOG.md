@@ -1,3 +1,8 @@
+## 0.5.0
+
+* Update minimum supported SDK version to Flutter 3.47/Dart 3.13.
+* Requires an app that uses `material_ui`.
+
 ## 0.4.0
 
 * Update minimum supported SDK version to Flutter 3.27/Dart 3.6.
