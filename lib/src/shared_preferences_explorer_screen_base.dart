@@ -23,9 +23,7 @@ class SharedPreferencesExplorerScreenBaseStarter extends StatelessWidget {
       builder: (context, snapshot) {
         final preferences = snapshot.data;
         if (preferences == null) {
-          return const Scaffold(
-            body: Center(child: Text('Loading...')),
-          );
+          return const Scaffold(body: Center(child: Text('Loading...')));
         }
         return _SharedPreferencesExplorerScreenBase(preferences: preferences);
       },
@@ -64,8 +62,9 @@ class _SharedPreferencesExplorerScreenBaseState
       _controller = TextEditingController(text: filter.searchText);
       _controller!.addListener(() {
         final filter = Filter.of(context).state;
-        Filter.of(context).state =
-            filter.copyWith(searchText: _controller!.text);
+        Filter.of(context).state = filter.copyWith(
+          searchText: _controller!.text,
+        );
       });
       _initialized = true;
     }
@@ -106,17 +105,16 @@ class _SharedPreferencesExplorerScreenBaseState
                   isSelected
                       ? valueTypes.add(valueType)
                       : valueTypes.remove(valueType);
-                  Filter.of(context).state =
-                      filter.copyWith(valueTypes: valueTypes);
+                  Filter.of(context).state = filter.copyWith(
+                    valueTypes: valueTypes,
+                  );
                 },
               ),
               const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
-                  children: [
-                    Text('${filteredPreferences.length} results'),
-                  ],
+                  children: [Text('${filteredPreferences.length} results')],
                 ),
               ),
               ...filteredPreferences.map((preference) {
@@ -138,14 +136,11 @@ class _SharedPreferencesExplorerScreenBaseState
 }
 
 class _FilterChips extends StatelessWidget {
-  const _FilterChips({
-    required this.filter,
-    required this.onSelected,
-  });
+  const _FilterChips({required this.filter, required this.onSelected});
 
   final Filter filter;
   final void Function(ValueType valueType, {required bool isSelected})
-      onSelected;
+  onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -178,9 +173,7 @@ class _FilterChips extends StatelessWidget {
 }
 
 class _PreferenceCard extends StatelessWidget {
-  const _PreferenceCard({
-    required this.preference,
-  });
+  const _PreferenceCard({required this.preference});
 
   final Preference preference;
 
@@ -216,8 +209,8 @@ class _PreferenceCard extends StatelessWidget {
                   ? '${preference.value.toString().substring(0, maxLength)}...'
                   : preference.value.toString(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
           ),
           Padding(
@@ -230,9 +223,8 @@ class _PreferenceCard extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<void>(
-                          builder: (context) => _StringListViewScreen(
-                            preference: preference,
-                          ),
+                          builder: (context) =>
+                              _StringListViewScreen(preference: preference),
                         ),
                       );
                     },
@@ -243,9 +235,8 @@ class _PreferenceCard extends StatelessWidget {
                     onPressed: () async {
                       await Navigator.of(context).push(
                         MaterialPageRoute<void>(
-                          builder: (context) => _StringViewScreen(
-                            preference: preference,
-                          ),
+                          builder: (context) =>
+                              _StringViewScreen(preference: preference),
                         ),
                       );
                     },
@@ -303,8 +294,9 @@ class _StringListViewScreenState extends State<_StringListViewScreen> {
         body: ListView.builder(
           itemCount: _items.length,
           itemBuilder: (context, index) {
-            final originalIndex =
-                _isReversed ? _items.length - 1 - index : index;
+            final originalIndex = _isReversed
+                ? _items.length - 1 - index
+                : index;
             return ListTile(
               title: SelectableText(originalIndex.toString()),
               subtitle: SelectableText(_items[index]),

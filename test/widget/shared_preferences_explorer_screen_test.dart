@@ -17,9 +17,7 @@ void main() {
 
     Future<void> pumpExplorer(WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: SharedPreferencesExplorerScreen(),
-        ),
+        const MaterialApp(home: SharedPreferencesExplorerScreen()),
       );
       await tester.pumpAndSettle();
     }
@@ -94,8 +92,9 @@ void main() {
           InMemorySharedPreferencesAsync.empty();
     });
 
-    testWidgets('Lists and filters values from SharedPreferencesAsync',
-        (tester) async {
+    testWidgets('Lists and filters values from SharedPreferencesAsync', (
+      tester,
+    ) async {
       final prefs = SharedPreferencesAsync();
       await prefs.setString('action', 'Stop');
       await prefs.setInt('counter', 10);

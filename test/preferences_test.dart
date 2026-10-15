@@ -196,9 +196,7 @@ void main() {
         Preference.fromKey('key4', 3.14),
       ]);
 
-      const filter = Filter(
-        valueTypes: [ValueType.intOrDouble],
-      );
+      const filter = Filter(valueTypes: [ValueType.intOrDouble]);
 
       final result = prefs.filtered(filter);
 
@@ -215,9 +213,7 @@ void main() {
         Preference.fromKey('settings_language', 'en'),
       ]);
 
-      const filter = Filter(
-        searchText: 'user',
-      );
+      const filter = Filter(searchText: 'user');
 
       final result = prefs.filtered(filter);
 
@@ -233,9 +229,7 @@ void main() {
         Preference.fromKey('country', 'Japan'),
       ]);
 
-      const filter = Filter(
-        searchText: 'Japan',
-      );
+      const filter = Filter(searchText: 'Japan');
 
       final result = prefs.filtered(filter);
 
@@ -243,17 +237,13 @@ void main() {
       expect(result[0].key, 'country');
     });
 
-    test(
-        'Can filter List<String> with multiple partial matches in filtered method',
-        () {
+    test('Can filter List<String> with multiple partial matches in filtered method', () {
       final prefs = Preferences([
         Preference.fromKey('tags', ['flutter_plugin', 'love_flutter', 'dart']),
         Preference.fromKey('another_key', 'some value'),
       ]);
 
-      const filter = Filter(
-        searchText: 'flutter',
-      );
+      const filter = Filter(searchText: 'flutter');
 
       final result = prefs.filtered(filter);
 
@@ -268,9 +258,7 @@ void main() {
         Preference.fromKey('email', 'alice@example.com'),
       ]);
 
-      const filter = Filter(
-        searchText: 'password',
-      );
+      const filter = Filter(searchText: 'password');
 
       final result = prefs.filtered(filter);
 
@@ -284,9 +272,7 @@ void main() {
         Preference.fromKey('another_key', 456),
       ]);
 
-      const filter = Filter(
-        searchText: '23',
-      );
+      const filter = Filter(searchText: '23');
 
       final result = prefs.filtered(filter);
 
@@ -300,9 +286,7 @@ void main() {
         Preference.fromKey('is_enabled', false),
       ]);
 
-      const filter = Filter(
-        searchText: 'true',
-      );
+      const filter = Filter(searchText: 'true');
 
       final result = prefs.filtered(filter);
 
@@ -350,9 +334,7 @@ void main() {
         Preference.fromKey('key2', 'value2'),
       ]);
 
-      const filter = Filter(
-        valueTypes: [ValueType.intOrDouble],
-      );
+      const filter = Filter(valueTypes: [ValueType.intOrDouble]);
 
       final result = prefs.filtered(filter);
 

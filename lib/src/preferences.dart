@@ -30,9 +30,7 @@ class Preferences {
           continue;
         }
 
-        result.add(
-          Preference.fromKey(entry.key, entry.value!),
-        );
+        result.add(Preference.fromKey(entry.key, entry.value!));
       }
     }
 
@@ -42,9 +40,7 @@ class Preferences {
         final value = sharedPreferences.get(key);
         assert(value != null, 'Unexpected');
 
-        result.add(
-          Preference.fromKey(key, value!),
-        );
+        result.add(Preference.fromKey(key, value!));
       }
     }
 
@@ -55,16 +51,17 @@ class Preferences {
 
   List<Preference> filtered(Filter filter) {
     return _preferences.where((preference) {
-      final typeMatch = filter.valueTypes.isEmpty ||
+      final typeMatch =
+          filter.valueTypes.isEmpty ||
           filter.valueTypes.contains(preference.valueType);
 
-      final textMatch = preference.key
-              .toLowerCase()
-              .contains(filter.searchText.toLowerCase()) ||
-          preference.value
-              .toString()
-              .toLowerCase()
-              .contains(filter.searchText.toLowerCase());
+      final textMatch =
+          preference.key.toLowerCase().contains(
+            filter.searchText.toLowerCase(),
+          ) ||
+          preference.value.toString().toLowerCase().contains(
+            filter.searchText.toLowerCase(),
+          );
 
       return typeMatch && textMatch;
     }).toList();

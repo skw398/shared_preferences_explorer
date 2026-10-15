@@ -18,10 +18,7 @@ class SharedPreferencesExplorerScreen extends _PreferencesExplorerScreenBase {
   ///   ),
   /// );
   /// ```
-  const SharedPreferencesExplorerScreen({
-    super.key,
-    this.instance,
-  });
+  const SharedPreferencesExplorerScreen({super.key, this.instance});
 
   /// Optional [SharedPreferences] instance to use.
   /// If not provided, `SharedPreferences.getInstance()` will be used.
@@ -53,10 +50,7 @@ class SharedPreferencesAsyncExplorerScreen
   ///   ),
   /// );
   /// ```
-  const SharedPreferencesAsyncExplorerScreen({
-    super.key,
-    this.instance,
-  });
+  const SharedPreferencesAsyncExplorerScreen({super.key, this.instance});
 
   /// Optional [SharedPreferencesAsync] instance to use.
   /// If not provided, `SharedPreferencesAsync()` will be used.
@@ -82,9 +76,7 @@ abstract class _PreferencesExplorerScreenBase extends StatelessWidget {
       builder: (context, snapshot) {
         final instanceContainer = snapshot.data;
         if (instanceContainer == null) {
-          return const Scaffold(
-            body: Center(child: Text('Loading...')),
-          );
+          return const Scaffold(body: Center(child: Text('Loading...')));
         }
 
         return FilterContext(

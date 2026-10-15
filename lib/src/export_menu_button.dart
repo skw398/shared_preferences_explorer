@@ -17,8 +17,10 @@ class ExportMenuButton extends StatelessWidget {
         for (final action in _Action.values)
           PopupMenuItem(
             value: action,
-            child:
-                ListTile(leading: Icon(action.icon), title: Text(action.label)),
+            child: ListTile(
+              leading: Icon(action.icon),
+              title: Text(action.label),
+            ),
           ),
       ],
       onSelected: (action) async {

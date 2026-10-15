@@ -51,8 +51,9 @@ class _FloatingButtonState extends State<FloatingButton> {
             top: _isDragging
                 ? _dragPosition.dy
                 : _currentAlignment.position(context).dy,
-            duration:
-                _isDragging ? Duration.zero : const Duration(milliseconds: 250),
+            duration: _isDragging
+                ? Duration.zero
+                : const Duration(milliseconds: 250),
             curve: Curves.fastOutSlowIn,
             child: GestureDetector(
               onPanStart: (details) {
@@ -78,12 +79,15 @@ class _FloatingButtonState extends State<FloatingButton> {
               child: FloatingActionButton(
                 foregroundColor: widget.colorScheme.onPrimaryContainer,
                 backgroundColor: widget.colorScheme.primaryContainer,
-                splashColor: widget.colorScheme.onPrimaryContainer
-                    .withValues(alpha: 0.12),
-                focusColor: widget.colorScheme.onPrimaryContainer
-                    .withValues(alpha: 0.12),
-                hoverColor: widget.colorScheme.onPrimaryContainer
-                    .withValues(alpha: 0.08),
+                splashColor: widget.colorScheme.onPrimaryContainer.withValues(
+                  alpha: 0.12,
+                ),
+                focusColor: widget.colorScheme.onPrimaryContainer.withValues(
+                  alpha: 0.12,
+                ),
+                hoverColor: widget.colorScheme.onPrimaryContainer.withValues(
+                  alpha: 0.08,
+                ),
                 onPressed: _isNavigating
                     ? null
                     : () async {
@@ -140,38 +144,35 @@ extension on FloatingButtonAlignment {
     );
 
     return switch (this) {
-      FloatingButtonAlignment.topLeft => Offset(
-          paddingLeft,
-          paddingTop,
-        ),
+      FloatingButtonAlignment.topLeft => Offset(paddingLeft, paddingTop),
       FloatingButtonAlignment.topCenter => Offset(
-          paddingLeft + (areaSize.width - FloatingButton.size) / 2,
-          paddingTop,
-        ),
+        paddingLeft + (areaSize.width - FloatingButton.size) / 2,
+        paddingTop,
+      ),
       FloatingButtonAlignment.topRight => Offset(
-          paddingLeft + areaSize.width - FloatingButton.size,
-          paddingTop,
-        ),
+        paddingLeft + areaSize.width - FloatingButton.size,
+        paddingTop,
+      ),
       FloatingButtonAlignment.centerLeft => Offset(
-          paddingLeft,
-          paddingTop + (areaSize.height - FloatingButton.size) / 2,
-        ),
+        paddingLeft,
+        paddingTop + (areaSize.height - FloatingButton.size) / 2,
+      ),
       FloatingButtonAlignment.centerRight => Offset(
-          paddingLeft + areaSize.width - FloatingButton.size,
-          paddingTop + (areaSize.height - FloatingButton.size) / 2,
-        ),
+        paddingLeft + areaSize.width - FloatingButton.size,
+        paddingTop + (areaSize.height - FloatingButton.size) / 2,
+      ),
       FloatingButtonAlignment.bottomLeft => Offset(
-          paddingLeft,
-          paddingTop + areaSize.height - FloatingButton.size,
-        ),
+        paddingLeft,
+        paddingTop + areaSize.height - FloatingButton.size,
+      ),
       FloatingButtonAlignment.bottomCenter => Offset(
-          paddingLeft + (areaSize.width - FloatingButton.size) / 2,
-          paddingTop + areaSize.height - FloatingButton.size,
-        ),
+        paddingLeft + (areaSize.width - FloatingButton.size) / 2,
+        paddingTop + areaSize.height - FloatingButton.size,
+      ),
       FloatingButtonAlignment.bottomRight => Offset(
-          paddingLeft + areaSize.width - FloatingButton.size,
-          paddingTop + areaSize.height - FloatingButton.size,
-        )
+        paddingLeft + areaSize.width - FloatingButton.size,
+        paddingTop + areaSize.height - FloatingButton.size,
+      ),
     };
   }
 }

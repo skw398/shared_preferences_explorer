@@ -123,8 +123,8 @@ class SharedPreferencesAsyncExplorer extends _SharedPreferencesExplorerBase {
 }
 
 class _SharedPreferencesAsyncExplorerState
-    extends _SharedPreferencesExplorerBaseState<
-        SharedPreferencesAsyncExplorer> {
+    extends
+        _SharedPreferencesExplorerBaseState<SharedPreferencesAsyncExplorer> {
   @override
   Future<SharedPreferencesInstanceContainer> getInstanceContainer() async {
     return SharedPreferencesInstanceContainer(
@@ -142,7 +142,9 @@ abstract class _SharedPreferencesExplorerBase extends StatefulWidget {
 }
 
 abstract class _SharedPreferencesExplorerBaseState<
-    T extends _SharedPreferencesExplorerBase> extends State<T> {
+  T extends _SharedPreferencesExplorerBase
+>
+    extends State<T> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   final colorSchemeSeed = Colors.blue;
 
@@ -171,8 +173,8 @@ abstract class _SharedPreferencesExplorerBaseState<
 
               return FloatingButton(
                 instanceContainer: instanceContainer,
-                colorScheme:
-                    ThemeData(colorSchemeSeed: colorSchemeSeed).colorScheme,
+                colorScheme: ThemeData(colorSchemeSeed: colorSchemeSeed)
+                    .colorScheme,
                 navigatorKey: _navigatorKey,
                 initialAlignment: widget._initialFloatingButtonAlignment,
               );
@@ -226,10 +228,7 @@ class _RouteContainerState extends State<_RouteContainer> {
 }
 
 class _NavigatorObserver extends RouteObserver {
-  _NavigatorObserver({
-    required this.onStateChange,
-    required this.navigatorKey,
-  });
+  _NavigatorObserver({required this.onStateChange, required this.navigatorKey});
 
   final void Function({required bool isPageOpen}) onStateChange;
   final GlobalKey<NavigatorState> navigatorKey;

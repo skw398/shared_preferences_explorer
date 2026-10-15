@@ -4,8 +4,7 @@ enum ValueType {
   intOrDouble('int, double'),
   bool('bool'),
   string('String'),
-  stringList('List<String>'),
-  ;
+  stringList('List<String>');
 
   const ValueType(this.label);
 

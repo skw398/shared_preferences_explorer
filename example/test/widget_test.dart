@@ -28,8 +28,9 @@ void main() {
     expect((await SharedPreferences.getInstance()).getInt('counter'), 0);
   });
 
-  testWidgets('Debug menu opens the shared preferences explorer',
-      (tester) async {
+  testWidgets('Debug menu opens the shared preferences explorer', (
+    tester,
+  ) async {
     SharedPreferences.setMockInitialValues({
       'counter': 10,
       'repeat': true,
