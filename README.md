@@ -11,8 +11,8 @@ Supports `SharedPreferences`, `SharedPreferencesAsync`, and `SharedPreferencesWi
 | | 1. Floating button widget | 2. Screen widget |
 | - | - | - |
 | SharedPreferences | SharedPreferencesExplorer | SharedPreferencesExplorerScreen |
-| SharedPreferencesAsync | SharedPreferencesAsyncExplorer | SharedPreferencesExplorerAsyncScreen |
-| SharedPreferencesWithCache | SharedPreferencesAsyncExplorer *(cache is ignored)* | SharedPreferencesExplorerAsyncScreen *(cache is ignored)* |
+| SharedPreferencesAsync | SharedPreferencesAsyncExplorer | SharedPreferencesAsyncExplorerScreen |
+| SharedPreferencesWithCache | SharedPreferencesAsyncExplorer *(cache is ignored)* | SharedPreferencesAsyncExplorerScreen *(cache is ignored)* |
 
 ## Usage
 
@@ -39,7 +39,7 @@ void main() {
 
 ### 2. Screen widget
 
-Use `SharedPreferencesExplorerScreen` or `SharedPreferencesExplorerAsyncScreen` in places like your app's debug menu.
+Use `SharedPreferencesExplorerScreen` or `SharedPreferencesAsyncExplorerScreen` in places like your app's debug menu.
 
 ```dart
 Navigator.of(context).push(
