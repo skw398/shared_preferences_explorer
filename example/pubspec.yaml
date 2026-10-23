@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # `material_ui` brings in `cupertino_ui`, which references `CupertinoIcons`.
+  # This dependency provides the font for those icons.
   cupertino_icons: ^1.0.8
   material_ui: ^1.7.0
   shared_preferences:
