@@ -6,6 +6,9 @@ import 'package:shared_preferences_explorer/src/shared_preferences_instance_cont
 
 class const SharedPreferencesExplorerScreen({
   super.key,
+
+  /// Optional [SharedPreferences] instance to use.
+  /// If not provided, `SharedPreferences.getInstance()` will be used.
   final SharedPreferences? instance,
 }) extends _PreferencesExplorerScreenBase {
   /// Use this if you are using [SharedPreferences] in your app.
@@ -31,6 +34,9 @@ class const SharedPreferencesExplorerScreen({
 
 class const SharedPreferencesAsyncExplorerScreen({
   super.key,
+
+  /// Optional [SharedPreferencesAsync] instance to use.
+  /// If not provided, `SharedPreferencesAsync()` will be used.
   final SharedPreferencesAsync? instance,
 }) extends _PreferencesExplorerScreenBase {
   /// Use this if you are using [SharedPreferencesAsync] or

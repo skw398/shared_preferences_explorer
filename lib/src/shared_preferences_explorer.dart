@@ -10,8 +10,15 @@ export 'floating_button_alignment.dart';
 
 class const SharedPreferencesExplorer({
   super.key,
+
+  /// Optional [SharedPreferences] instance to use.
+  /// If not provided, `SharedPreferences.getInstance()` will be used.
   final SharedPreferences? instance,
+
+  /// The initial position for the draggable floating button
   final FloatingButtonAlignment? initialFloatingButtonAlignment = .bottomLeft,
+
+  /// The root widget of your application
   required final Widget child,
 }) extends _SharedPreferencesExplorerBase {
   /// Use this if you are using [SharedPreferences] in your app.
@@ -59,8 +66,15 @@ class _SharedPreferencesExplorerState
 
 class const SharedPreferencesAsyncExplorer({
   super.key,
+
+  /// Optional [SharedPreferencesAsync] instance to use.
+  /// If not provided, `SharedPreferencesAsync()` will be used.
   final SharedPreferencesAsync? instance,
+
+  /// The initial position for the draggable floating button
   final FloatingButtonAlignment? initialFloatingButtonAlignment = .bottomLeft,
+
+  /// The root widget of your application
   required final Widget child,
 }) extends _SharedPreferencesExplorerBase {
   /// Use this if you are using [SharedPreferencesAsync] or
