@@ -51,3 +51,15 @@ jobs:
       - name: Build example for the web
         working-directory: example
         run: flutter build web
+
+  score:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Fails unless the package scores the maximum. The allowed number of
+      # missing points can be relaxed with `exit-code-threshold`.
+      - uses: skw398/docker-pana@main
+        with:
+          path: "."
+          exit-code-threshold: "0"
