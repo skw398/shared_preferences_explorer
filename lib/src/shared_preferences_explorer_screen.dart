@@ -1,10 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_explorer/src/filter.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_explorer_screen_base.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_instance_container.dart';
 
-class SharedPreferencesExplorerScreen extends _PreferencesExplorerScreenBase {
+class const SharedPreferencesExplorerScreen({
+  super.key,
+
+  /// Optional [SharedPreferences] instance to use.
+  /// If not provided, `SharedPreferences.getInstance()` will be used.
+  final SharedPreferences? instance,
+}) extends _PreferencesExplorerScreenBase {
   /// Use this if you are using [SharedPreferences] in your app.
   ///
   /// You can optionally provide a [SharedPreferences] instance to the
@@ -18,15 +24,6 @@ class SharedPreferencesExplorerScreen extends _PreferencesExplorerScreenBase {
   ///   ),
   /// );
   /// ```
-  const SharedPreferencesExplorerScreen({
-    super.key,
-    this.instance,
-  });
-
-  /// Optional [SharedPreferences] instance to use.
-  /// If not provided, `SharedPreferences.getInstance()` will be used.
-  final SharedPreferences? instance;
-
   @override
   Future<SharedPreferencesInstanceContainer> getInstanceContainer() async {
     return SharedPreferencesInstanceContainer(
@@ -35,8 +32,13 @@ class SharedPreferencesExplorerScreen extends _PreferencesExplorerScreenBase {
   }
 }
 
-class SharedPreferencesAsyncExplorerScreen
-    extends _PreferencesExplorerScreenBase {
+class const SharedPreferencesAsyncExplorerScreen({
+  super.key,
+
+  /// Optional [SharedPreferencesAsync] instance to use.
+  /// If not provided, `SharedPreferencesAsync()` will be used.
+  final SharedPreferencesAsync? instance,
+}) extends _PreferencesExplorerScreenBase {
   /// Use this if you are using [SharedPreferencesAsync] or
   /// [SharedPreferencesWithCache] in your app.
   /// Note that the cache feature of [SharedPreferencesWithCache] is ignored,
@@ -53,15 +55,6 @@ class SharedPreferencesAsyncExplorerScreen
   ///   ),
   /// );
   /// ```
-  const SharedPreferencesAsyncExplorerScreen({
-    super.key,
-    this.instance,
-  });
-
-  /// Optional [SharedPreferencesAsync] instance to use.
-  /// If not provided, `SharedPreferencesAsync()` will be used.
-  final SharedPreferencesAsync? instance;
-
   @override
   Future<SharedPreferencesInstanceContainer> getInstanceContainer() async {
     return SharedPreferencesInstanceContainer(
@@ -71,20 +64,37 @@ class SharedPreferencesAsyncExplorerScreen
 }
 
 abstract class _PreferencesExplorerScreenBase extends StatelessWidget {
-  const _PreferencesExplorerScreenBase({super.key});
+  const new({super.key});
 
   Future<SharedPreferencesInstanceContainer> getInstanceContainer();
 
   @override
   Widget build(BuildContext context) {
+    if (Localizations.of<MaterialLocalizations>(
+          context,
+          MaterialLocalizations,
+        ) ==
+        null) {
+      throw FlutterError(
+        'shared_preferences_explorer: the screen widgets require an app that '
+        'uses package:material_ui.\n'
+        'The screen widgets are built with material_ui, which needs '
+        'MaterialLocalizations from material_ui, but the host app does not '
+        'provide them.\n'
+        'Use SharedPreferencesExplorer or SharedPreferencesAsyncExplorer (the '
+        'floating button widgets), which work in any app, or stay on '
+        'shared_preferences_explorer 0.4.0.\n'
+        'To migrate the app, run: '
+        'dart fix --apply --code=migrate_design_widgets',
+      );
+    }
+
     return FutureBuilder<SharedPreferencesInstanceContainer>(
       future: getInstanceContainer(),
       builder: (context, snapshot) {
         final instanceContainer = snapshot.data;
         if (instanceContainer == null) {
-          return const Scaffold(
-            body: Center(child: Text('Loading...')),
-          );
+          return const Scaffold(body: Center(child: Text('Loading...')));
         }
 
         return FilterContext(

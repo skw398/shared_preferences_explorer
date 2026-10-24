@@ -1,22 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences_explorer/shared_preferences_explorer.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_explorer_screen_base.dart';
 import 'package:shared_preferences_explorer/src/shared_preferences_instance_container.dart';
 
-class FloatingButton extends StatefulWidget {
-  const FloatingButton({
-    required this.instanceContainer,
-    required this.colorScheme,
-    required this.navigatorKey,
-    required this.initialAlignment,
-    super.key,
-  });
-
-  final SharedPreferencesInstanceContainer instanceContainer;
-  final ColorScheme colorScheme;
-  final GlobalKey<NavigatorState> navigatorKey;
-  final FloatingButtonAlignment initialAlignment;
-
+class const FloatingButton({
+  required final SharedPreferencesInstanceContainer instanceContainer,
+  required final ColorScheme colorScheme,
+  required final GlobalKey<NavigatorState> navigatorKey,
+  required final FloatingButtonAlignment initialAlignment,
+  super.key,
+}) extends StatefulWidget {
   @override
   State<FloatingButton> createState() => _FloatingButtonState();
 
@@ -39,7 +32,7 @@ class _FloatingButtonState extends State<FloatingButton> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.ltr,
+      textDirection: .ltr,
       child: Stack(
         children: [
           AnimatedPositioned(
@@ -51,8 +44,9 @@ class _FloatingButtonState extends State<FloatingButton> {
             top: _isDragging
                 ? _dragPosition.dy
                 : _currentAlignment.position(context).dy,
-            duration:
-                _isDragging ? Duration.zero : const Duration(milliseconds: 250),
+            duration: _isDragging
+                ? Duration.zero
+                : const Duration(milliseconds: 250),
             curve: Curves.fastOutSlowIn,
             child: GestureDetector(
               onPanStart: (details) {
@@ -78,12 +72,15 @@ class _FloatingButtonState extends State<FloatingButton> {
               child: FloatingActionButton(
                 foregroundColor: widget.colorScheme.onPrimaryContainer,
                 backgroundColor: widget.colorScheme.primaryContainer,
-                splashColor: widget.colorScheme.onPrimaryContainer
-                    .withValues(alpha: 0.12),
-                focusColor: widget.colorScheme.onPrimaryContainer
-                    .withValues(alpha: 0.12),
-                hoverColor: widget.colorScheme.onPrimaryContainer
-                    .withValues(alpha: 0.08),
+                splashColor: widget.colorScheme.onPrimaryContainer.withValues(
+                  alpha: 0.12,
+                ),
+                focusColor: widget.colorScheme.onPrimaryContainer.withValues(
+                  alpha: 0.12,
+                ),
+                hoverColor: widget.colorScheme.onPrimaryContainer.withValues(
+                  alpha: 0.08,
+                ),
                 onPressed: _isNavigating
                     ? null
                     : () async {
@@ -140,38 +137,35 @@ extension on FloatingButtonAlignment {
     );
 
     return switch (this) {
-      FloatingButtonAlignment.topLeft => Offset(
-          paddingLeft,
-          paddingTop,
-        ),
-      FloatingButtonAlignment.topCenter => Offset(
-          paddingLeft + (areaSize.width - FloatingButton.size) / 2,
-          paddingTop,
-        ),
-      FloatingButtonAlignment.topRight => Offset(
-          paddingLeft + areaSize.width - FloatingButton.size,
-          paddingTop,
-        ),
-      FloatingButtonAlignment.centerLeft => Offset(
-          paddingLeft,
-          paddingTop + (areaSize.height - FloatingButton.size) / 2,
-        ),
-      FloatingButtonAlignment.centerRight => Offset(
-          paddingLeft + areaSize.width - FloatingButton.size,
-          paddingTop + (areaSize.height - FloatingButton.size) / 2,
-        ),
-      FloatingButtonAlignment.bottomLeft => Offset(
-          paddingLeft,
-          paddingTop + areaSize.height - FloatingButton.size,
-        ),
-      FloatingButtonAlignment.bottomCenter => Offset(
-          paddingLeft + (areaSize.width - FloatingButton.size) / 2,
-          paddingTop + areaSize.height - FloatingButton.size,
-        ),
-      FloatingButtonAlignment.bottomRight => Offset(
-          paddingLeft + areaSize.width - FloatingButton.size,
-          paddingTop + areaSize.height - FloatingButton.size,
-        )
+      .topLeft => Offset(paddingLeft, paddingTop),
+      .topCenter => Offset(
+        paddingLeft + (areaSize.width - FloatingButton.size) / 2,
+        paddingTop,
+      ),
+      .topRight => Offset(
+        paddingLeft + areaSize.width - FloatingButton.size,
+        paddingTop,
+      ),
+      .centerLeft => Offset(
+        paddingLeft,
+        paddingTop + (areaSize.height - FloatingButton.size) / 2,
+      ),
+      .centerRight => Offset(
+        paddingLeft + areaSize.width - FloatingButton.size,
+        paddingTop + (areaSize.height - FloatingButton.size) / 2,
+      ),
+      .bottomLeft => Offset(
+        paddingLeft,
+        paddingTop + areaSize.height - FloatingButton.size,
+      ),
+      .bottomCenter => Offset(
+        paddingLeft + (areaSize.width - FloatingButton.size) / 2,
+        paddingTop + areaSize.height - FloatingButton.size,
+      ),
+      .bottomRight => Offset(
+        paddingLeft + areaSize.width - FloatingButton.size,
+        paddingTop + areaSize.height - FloatingButton.size,
+      ),
     };
   }
 }

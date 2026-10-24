@@ -1,0 +1,35 @@
+name: Publish to pub.dev
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+" # tag pattern on pub.dev: '{{version}}'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check that the tag is on main
+        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main
+
+      - name: Check that the tag matches the version in pubspec.yaml
+        run: |
+          set -eu
+          tag="${GITHUB_REF_NAME}"
+          version="$(sed -n 's/^version: *//p' pubspec.yaml)"
+          if [ "$tag" != "$version" ]; then
+            echo "Tag '$tag' does not match the version in pubspec.yaml ($version)." >&2
+            exit 1
+          fi
+
+  publish:
+    needs: check
+    permissions:
+      id-token: write # Required for authentication using OIDC
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      environment: pub.dev

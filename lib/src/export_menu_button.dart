@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences_explorer/src/preference.dart';
 
-class ExportMenuButton extends StatelessWidget {
-  const ExportMenuButton({super.key, required this.preferences});
-
-  final List<Preference> preferences;
-
+class const ExportMenuButton({
+  super.key,
+  required final List<Preference> preferences,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<_Action>(
@@ -17,8 +16,10 @@ class ExportMenuButton extends StatelessWidget {
         for (final action in _Action.values)
           PopupMenuItem(
             value: action,
-            child:
-                ListTile(leading: Icon(action.icon), title: Text(action.label)),
+            child: ListTile(
+              leading: Icon(action.icon),
+              title: Text(action.label),
+            ),
           ),
       ],
       onSelected: (action) async {
@@ -36,23 +37,17 @@ class ExportMenuButton extends StatelessWidget {
   }
 }
 
-enum _Action {
+enum _Action(final IconData icon, final String label, final String message) {
   copy(Icons.content_copy, 'Copy as JSON', 'Copied to clipboard'),
   dump(Icons.terminal, 'Dump as JSON', 'Dumped to console');
-
-  const _Action(this.icon, this.label, this.message);
-
-  final IconData icon;
-  final String label;
-  final String message;
 
   void execute(Map<String, dynamic> data) {
     final formatted = const JsonEncoder.withIndent('  ').convert(data);
 
     switch (this) {
-      case _Action.copy:
+      case .copy:
         Clipboard.setData(ClipboardData(text: formatted));
-      case _Action.dump:
+      case .dump:
         debugPrint(formatted);
     }
   }

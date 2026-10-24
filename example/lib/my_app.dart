@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_explorer/shared_preferences_explorer.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class const MyApp({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,11 +17,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({required this.title, super.key});
-
-  final String title;
-
+class const MyHomePage({required final String title, super.key})
+    extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -61,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           if (kDebugMode)
             Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const .only(right: 8),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
@@ -77,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
             Text(
@@ -100,9 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class _DebugMenu extends StatelessWidget {
-  const _DebugMenu();
-
+class const _DebugMenu() extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

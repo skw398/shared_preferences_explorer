@@ -93,9 +93,7 @@ void main() {
       expect(userPrefs[0].key, 'user_age');
       expect(userPrefs[1].key, 'user_name');
 
-      final intPrefs = prefs.filtered(
-        const Filter(valueTypes: [ValueType.intOrDouble]),
-      );
+      final intPrefs = prefs.filtered(const Filter(valueTypes: [.intOrDouble]));
       expect(intPrefs.length, 2);
       expect(intPrefs[0].key, 'admin_level');
       expect(intPrefs[1].key, 'user_age');
@@ -196,9 +194,7 @@ void main() {
         Preference.fromKey('key4', 3.14),
       ]);
 
-      const filter = Filter(
-        valueTypes: [ValueType.intOrDouble],
-      );
+      const filter = Filter(valueTypes: [.intOrDouble]);
 
       final result = prefs.filtered(filter);
 
@@ -215,9 +211,7 @@ void main() {
         Preference.fromKey('settings_language', 'en'),
       ]);
 
-      const filter = Filter(
-        searchText: 'user',
-      );
+      const filter = Filter(searchText: 'user');
 
       final result = prefs.filtered(filter);
 
@@ -233,9 +227,7 @@ void main() {
         Preference.fromKey('country', 'Japan'),
       ]);
 
-      const filter = Filter(
-        searchText: 'Japan',
-      );
+      const filter = Filter(searchText: 'Japan');
 
       final result = prefs.filtered(filter);
 
@@ -243,17 +235,13 @@ void main() {
       expect(result[0].key, 'country');
     });
 
-    test(
-        'Can filter List<String> with multiple partial matches in filtered method',
-        () {
+    test('Can filter List<String> with multiple partial matches in filtered method', () {
       final prefs = Preferences([
         Preference.fromKey('tags', ['flutter_plugin', 'love_flutter', 'dart']),
         Preference.fromKey('another_key', 'some value'),
       ]);
 
-      const filter = Filter(
-        searchText: 'flutter',
-      );
+      const filter = Filter(searchText: 'flutter');
 
       final result = prefs.filtered(filter);
 
@@ -268,9 +256,7 @@ void main() {
         Preference.fromKey('email', 'alice@example.com'),
       ]);
 
-      const filter = Filter(
-        searchText: 'password',
-      );
+      const filter = Filter(searchText: 'password');
 
       final result = prefs.filtered(filter);
 
@@ -284,9 +270,7 @@ void main() {
         Preference.fromKey('another_key', 456),
       ]);
 
-      const filter = Filter(
-        searchText: '23',
-      );
+      const filter = Filter(searchText: '23');
 
       final result = prefs.filtered(filter);
 
@@ -300,9 +284,7 @@ void main() {
         Preference.fromKey('is_enabled', false),
       ]);
 
-      const filter = Filter(
-        searchText: 'true',
-      );
+      const filter = Filter(searchText: 'true');
 
       final result = prefs.filtered(filter);
 
@@ -318,10 +300,7 @@ void main() {
         Preference.fromKey('admin_name', 'Alice'),
       ]);
 
-      const filter = Filter(
-        valueTypes: [ValueType.intOrDouble],
-        searchText: 'user',
-      );
+      const filter = Filter(valueTypes: [.intOrDouble], searchText: 'user');
 
       final result = prefs.filtered(filter);
 
@@ -350,9 +329,7 @@ void main() {
         Preference.fromKey('key2', 'value2'),
       ]);
 
-      const filter = Filter(
-        valueTypes: [ValueType.intOrDouble],
-      );
+      const filter = Filter(valueTypes: [.intOrDouble]);
 
       final result = prefs.filtered(filter);
 
@@ -381,9 +358,7 @@ void main() {
         Preference.fromKey('key4', <String>['list']),
       ]);
 
-      const filter = Filter(
-        valueTypes: [ValueType.string, ValueType.bool, ValueType.stringList],
-      );
+      const filter = Filter(valueTypes: [.string, .bool, .stringList]);
 
       final result = prefs.filtered(filter);
 

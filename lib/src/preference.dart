@@ -1,8 +1,8 @@
 import 'package:shared_preferences_explorer/src/value_type.dart';
 
 class Preference {
-  Preference.fromKey(this.key, this.value) {
-    valueType = ValueType.from(value);
+  new fromKey(this.key, this.value) {
+    valueType = .from(value);
   }
 
   final String key;

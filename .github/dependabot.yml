@@ -1,0 +1,39 @@
+version: 2
+
+updates:
+  - package-ecosystem: "pub"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Only change the constraints when the current ones cannot satisfy a new
+    # release (for example, a new major). For a library, the default `widen`
+    # would silently allow untested majors.
+    versioning-strategy: "increase-if-necessary"
+    groups:
+      pub:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "pub"
+    directory: "/example"
+    schedule:
+      interval: "weekly"
+    groups:
+      example-pub:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"

@@ -1,19 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences_explorer/src/value_type.dart';
 
-class Filter {
-  const Filter({
-    this.valueTypes = const [],
-    this.searchText = '',
-  });
-
-  final List<ValueType> valueTypes;
-  final String searchText;
-
-  Filter copyWith({
-    List<ValueType>? valueTypes,
-    String? searchText,
-  }) {
+class const Filter({
+  final List<ValueType> valueTypes = const [],
+  final String searchText = '',
+}) {
+  Filter copyWith({List<ValueType>? valueTypes, String? searchText}) {
     return Filter(
       valueTypes: valueTypes ?? this.valueTypes,
       searchText: searchText ?? this.searchText,
@@ -21,8 +13,8 @@ class Filter {
   }
 
   static FilterNotifier of(BuildContext context) {
-    final inheritedWidget =
-        context.dependOnInheritedWidgetOfExactType<_FilterProviderInherited>();
+    final inheritedWidget = context
+        .dependOnInheritedWidgetOfExactType<_FilterProviderInherited>();
     if (inheritedWidget == null) {
       throw FlutterError('FilterProvider not found in context');
     }
@@ -30,16 +22,11 @@ class Filter {
   }
 }
 
-class FilterContext extends StatefulWidget {
-  const FilterContext({
-    required this.child,
-    super.key,
-    this.filter = const Filter(),
-  });
-
-  final Widget child;
-  final Filter filter;
-
+class const FilterContext({
+  required final Widget child,
+  super.key,
+  final Filter filter = const Filter(),
+}) extends StatefulWidget {
   @override
   FilterContextState createState() => FilterContextState();
 }
@@ -62,10 +49,7 @@ class FilterContextState extends State<FilterContext> {
 
   @override
   Widget build(BuildContext context) {
-    return _FilterProviderInherited(
-      notifier: _notifier,
-      child: widget.child,
-    );
+    return _FilterProviderInherited(notifier: _notifier, child: widget.child);
   }
 }
 
@@ -81,8 +65,5 @@ class FilterNotifier extends ChangeNotifier {
 }
 
 class _FilterProviderInherited extends InheritedNotifier<FilterNotifier> {
-  const _FilterProviderInherited({
-    required FilterNotifier super.notifier,
-    required super.child,
-  });
+  const new({required FilterNotifier super.notifier, required super.child});
 }

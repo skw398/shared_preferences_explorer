@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences_explorer/src/export_menu_button.dart';
 import 'package:shared_preferences_explorer/src/filter.dart';
 import 'package:shared_preferences_explorer/src/preference.dart';
@@ -8,14 +8,10 @@ import 'package:shared_preferences_explorer/src/shared_preferences_instance_cont
 import 'package:shared_preferences_explorer/src/value_type.dart';
 import 'package:shared_preferences_explorer/src/value_type_label.dart';
 
-class SharedPreferencesExplorerScreenBaseStarter extends StatelessWidget {
-  const SharedPreferencesExplorerScreenBaseStarter({
-    required this.instanceContainer,
-    super.key,
-  });
-
-  final SharedPreferencesInstanceContainer instanceContainer;
-
+class const SharedPreferencesExplorerScreenBaseStarter({
+  required final SharedPreferencesInstanceContainer instanceContainer,
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Preferences>(
@@ -23,9 +19,7 @@ class SharedPreferencesExplorerScreenBaseStarter extends StatelessWidget {
       builder: (context, snapshot) {
         final preferences = snapshot.data;
         if (preferences == null) {
-          return const Scaffold(
-            body: Center(child: Text('Loading...')),
-          );
+          return const Scaffold(body: Center(child: Text('Loading...')));
         }
         return _SharedPreferencesExplorerScreenBase(preferences: preferences);
       },
@@ -33,11 +27,9 @@ class SharedPreferencesExplorerScreenBaseStarter extends StatelessWidget {
   }
 }
 
-class _SharedPreferencesExplorerScreenBase extends StatefulWidget {
-  const _SharedPreferencesExplorerScreenBase({required this.preferences});
-
-  final Preferences preferences;
-
+class const _SharedPreferencesExplorerScreenBase({
+  required final Preferences preferences,
+}) extends StatefulWidget {
   @override
   State<_SharedPreferencesExplorerScreenBase> createState() =>
       _SharedPreferencesExplorerScreenBaseState();
@@ -64,8 +56,9 @@ class _SharedPreferencesExplorerScreenBaseState
       _controller = TextEditingController(text: filter.searchText);
       _controller!.addListener(() {
         final filter = Filter.of(context).state;
-        Filter.of(context).state =
-            filter.copyWith(searchText: _controller!.text);
+        Filter.of(context).state = filter.copyWith(
+          searchText: _controller!.text,
+        );
       });
       _initialized = true;
     }
@@ -76,7 +69,7 @@ class _SharedPreferencesExplorerScreenBaseState
           title: TextField(
             controller: _controller,
             decoration: const InputDecoration(
-              border: InputBorder.none,
+              border: .none,
               hintText: 'Search key or value',
             ),
           ),
@@ -96,7 +89,7 @@ class _SharedPreferencesExplorerScreenBaseState
         body: SafeArea(
           bottom: false,
           child: ListView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            keyboardDismissBehavior: .onDrag,
             children: [
               const SizedBox(height: 8),
               _FilterChips(
@@ -106,17 +99,16 @@ class _SharedPreferencesExplorerScreenBaseState
                   isSelected
                       ? valueTypes.add(valueType)
                       : valueTypes.remove(valueType);
-                  Filter.of(context).state =
-                      filter.copyWith(valueTypes: valueTypes);
+                  Filter.of(context).state = filter.copyWith(
+                    valueTypes: valueTypes,
+                  );
                 },
               ),
               const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
-                  children: [
-                    Text('${filteredPreferences.length} results'),
-                  ],
+                  children: [Text('${filteredPreferences.length} results')],
                 ),
               ),
               ...filteredPreferences.map((preference) {
@@ -138,19 +130,16 @@ class _SharedPreferencesExplorerScreenBaseState
 }
 
 class _FilterChips extends StatelessWidget {
-  const _FilterChips({
-    required this.filter,
-    required this.onSelected,
-  });
+  const _FilterChips({required this.filter, required this.onSelected});
 
   final Filter filter;
   final void Function(ValueType valueType, {required bool isSelected})
-      onSelected;
+  onSelected;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+      scrollDirection: .horizontal,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
@@ -162,7 +151,7 @@ class _FilterChips extends StatelessWidget {
                 right: index == ValueType.values.length - 1 ? 0 : 8,
               ),
               child: FilterChip.elevated(
-                materialTapTargetSize: MaterialTapTargetSize.padded,
+                materialTapTargetSize: .padded,
                 label: Text(valueType.label),
                 selected: filter.valueTypes.contains(valueType),
                 onSelected: (isSelected) {
@@ -178,9 +167,7 @@ class _FilterChips extends StatelessWidget {
 }
 
 class _PreferenceCard extends StatelessWidget {
-  const _PreferenceCard({
-    required this.preference,
-  });
+  const _PreferenceCard({required this.preference});
 
   final Preference preference;
 
@@ -191,7 +178,7 @@ class _PreferenceCard extends StatelessWidget {
 
     return Card(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 16),
@@ -216,23 +203,22 @@ class _PreferenceCard extends StatelessWidget {
                   ? '${preference.value.toString().substring(0, maxLength)}...'
                   : preference.value.toString(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8, right: 8, bottom: 2),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: .end,
               children: [
                 if (preference.value is List<String>)
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<void>(
-                          builder: (context) => _StringListViewScreen(
-                            preference: preference,
-                          ),
+                          builder: (context) =>
+                              _StringListViewScreen(preference: preference),
                         ),
                       );
                     },
@@ -243,9 +229,8 @@ class _PreferenceCard extends StatelessWidget {
                     onPressed: () async {
                       await Navigator.of(context).push(
                         MaterialPageRoute<void>(
-                          builder: (context) => _StringViewScreen(
-                            preference: preference,
-                          ),
+                          builder: (context) =>
+                              _StringViewScreen(preference: preference),
                         ),
                       );
                     },
@@ -262,11 +247,8 @@ class _PreferenceCard extends StatelessWidget {
   }
 }
 
-class _StringListViewScreen extends StatefulWidget {
-  const _StringListViewScreen({required this.preference});
-
-  final Preference preference;
-
+class const _StringListViewScreen({required final Preference preference})
+    extends StatefulWidget {
   @override
   State<_StringListViewScreen> createState() => _StringListViewScreenState();
 }
@@ -303,8 +285,9 @@ class _StringListViewScreenState extends State<_StringListViewScreen> {
         body: ListView.builder(
           itemCount: _items.length,
           itemBuilder: (context, index) {
-            final originalIndex =
-                _isReversed ? _items.length - 1 - index : index;
+            final originalIndex = _isReversed
+                ? _items.length - 1 - index
+                : index;
             return ListTile(
               title: SelectableText(originalIndex.toString()),
               subtitle: SelectableText(_items[index]),
@@ -316,11 +299,8 @@ class _StringListViewScreenState extends State<_StringListViewScreen> {
   }
 }
 
-class _StringViewScreen extends StatelessWidget {
-  const _StringViewScreen({required this.preference});
-
-  final Preference preference;
-
+class const _StringViewScreen({required final Preference preference})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SharedPreferencesExplorerTheme(

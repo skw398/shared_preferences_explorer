@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_explorer/src/filter.dart';
 import 'package:shared_preferences_explorer/src/floating_button.dart';
@@ -8,7 +8,19 @@ import 'package:shared_preferences_explorer/src/shared_preferences_instance_cont
 
 export 'floating_button_alignment.dart';
 
-class SharedPreferencesExplorer extends _SharedPreferencesExplorerBase {
+class const SharedPreferencesExplorer({
+  super.key,
+
+  /// Optional [SharedPreferences] instance to use.
+  /// If not provided, `SharedPreferences.getInstance()` will be used.
+  final SharedPreferences? instance,
+
+  /// The initial position for the draggable floating button
+  final FloatingButtonAlignment? initialFloatingButtonAlignment = .bottomLeft,
+
+  /// The root widget of your application
+  required final Widget child,
+}) extends _SharedPreferencesExplorerBase {
   /// Use this if you are using [SharedPreferences] in your app.
   ///
   /// Wrap your app's root widget. and tap the floating button to open.
@@ -29,23 +41,6 @@ class SharedPreferencesExplorer extends _SharedPreferencesExplorerBase {
   ///   );
   /// }
   /// ```
-  const SharedPreferencesExplorer({
-    super.key,
-    this.instance,
-    this.initialFloatingButtonAlignment = FloatingButtonAlignment.bottomLeft,
-    required this.child,
-  });
-
-  /// Optional [SharedPreferences] instance to use.
-  /// If not provided, `SharedPreferences.getInstance()` will be used.
-  final SharedPreferences? instance;
-
-  /// The initial position for the draggable floating button
-  final FloatingButtonAlignment? initialFloatingButtonAlignment;
-
-  /// The root widget of your application
-  final Widget child;
-
   @override
   FloatingButtonAlignment get _initialFloatingButtonAlignment =>
       initialFloatingButtonAlignment!;
@@ -69,7 +64,19 @@ class _SharedPreferencesExplorerState
   }
 }
 
-class SharedPreferencesAsyncExplorer extends _SharedPreferencesExplorerBase {
+class const SharedPreferencesAsyncExplorer({
+  super.key,
+
+  /// Optional [SharedPreferencesAsync] instance to use.
+  /// If not provided, `SharedPreferencesAsync()` will be used.
+  final SharedPreferencesAsync? instance,
+
+  /// The initial position for the draggable floating button
+  final FloatingButtonAlignment? initialFloatingButtonAlignment = .bottomLeft,
+
+  /// The root widget of your application
+  required final Widget child,
+}) extends _SharedPreferencesExplorerBase {
   /// Use this if you are using [SharedPreferencesAsync] or
   /// [SharedPreferencesWithCache].
   /// Note that the cache feature of [SharedPreferencesWithCache] is ignored,
@@ -93,23 +100,6 @@ class SharedPreferencesAsyncExplorer extends _SharedPreferencesExplorerBase {
   ///   );
   /// }
   /// ```
-  const SharedPreferencesAsyncExplorer({
-    super.key,
-    this.instance,
-    this.initialFloatingButtonAlignment = FloatingButtonAlignment.bottomLeft,
-    required this.child,
-  });
-
-  /// Optional [SharedPreferencesAsync] instance to use.
-  /// If not provided, `SharedPreferencesAsync()` will be used.
-  final SharedPreferencesAsync? instance;
-
-  /// The initial position for the draggable floating button
-  final FloatingButtonAlignment? initialFloatingButtonAlignment;
-
-  /// The root widget of your application
-  final Widget child;
-
   @override
   FloatingButtonAlignment get _initialFloatingButtonAlignment =>
       initialFloatingButtonAlignment!;
@@ -123,8 +113,8 @@ class SharedPreferencesAsyncExplorer extends _SharedPreferencesExplorerBase {
 }
 
 class _SharedPreferencesAsyncExplorerState
-    extends _SharedPreferencesExplorerBaseState<
-        SharedPreferencesAsyncExplorer> {
+    extends
+        _SharedPreferencesExplorerBaseState<SharedPreferencesAsyncExplorer> {
   @override
   Future<SharedPreferencesInstanceContainer> getInstanceContainer() async {
     return SharedPreferencesInstanceContainer(
@@ -134,7 +124,7 @@ class _SharedPreferencesAsyncExplorerState
 }
 
 abstract class _SharedPreferencesExplorerBase extends StatefulWidget {
-  const _SharedPreferencesExplorerBase({super.key});
+  const new({super.key});
 
   FloatingButtonAlignment get _initialFloatingButtonAlignment;
 
@@ -142,7 +132,9 @@ abstract class _SharedPreferencesExplorerBase extends StatefulWidget {
 }
 
 abstract class _SharedPreferencesExplorerBaseState<
-    T extends _SharedPreferencesExplorerBase> extends State<T> {
+  T extends _SharedPreferencesExplorerBase
+>
+    extends State<T> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   final colorSchemeSeed = Colors.blue;
 
@@ -158,7 +150,7 @@ abstract class _SharedPreferencesExplorerBaseState<
 
     return FilterContext(
       child: Stack(
-        alignment: Alignment.center,
+        alignment: .center,
         children: [
           widget._child,
           FutureBuilder<SharedPreferencesInstanceContainer>(
@@ -171,8 +163,8 @@ abstract class _SharedPreferencesExplorerBaseState<
 
               return FloatingButton(
                 instanceContainer: instanceContainer,
-                colorScheme:
-                    ThemeData(colorSchemeSeed: colorSchemeSeed).colorScheme,
+                colorScheme: ThemeData(colorSchemeSeed: colorSchemeSeed)
+                    .colorScheme,
                 navigatorKey: _navigatorKey,
                 initialAlignment: widget._initialFloatingButtonAlignment,
               );
@@ -185,11 +177,9 @@ abstract class _SharedPreferencesExplorerBaseState<
   }
 }
 
-class _RouteContainer extends StatefulWidget {
-  const _RouteContainer({required this.navigatorKey});
-
-  final GlobalKey<NavigatorState> navigatorKey;
-
+class const _RouteContainer({
+  required final GlobalKey<NavigatorState> navigatorKey,
+}) extends StatefulWidget {
   @override
   State<_RouteContainer> createState() => _RouteContainerState();
 }
@@ -226,10 +216,7 @@ class _RouteContainerState extends State<_RouteContainer> {
 }
 
 class _NavigatorObserver extends RouteObserver {
-  _NavigatorObserver({
-    required this.onStateChange,
-    required this.navigatorKey,
-  });
+  new({required this.onStateChange, required this.navigatorKey});
 
   final void Function({required bool isPageOpen}) onStateChange;
   final GlobalKey<NavigatorState> navigatorKey;

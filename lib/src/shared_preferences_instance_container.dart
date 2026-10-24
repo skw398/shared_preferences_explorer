@@ -5,9 +5,9 @@ class SharedPreferencesInstanceContainer {
     this.sharedPreferences,
     this.sharedPreferencesAsync,
   }) : assert(
-          (sharedPreferences != null) ^ (sharedPreferencesAsync != null),
-          'SharedPreferences or SharedPreferencesAsync must be provided',
-        );
+         (sharedPreferences != null) ^ (sharedPreferencesAsync != null),
+         'SharedPreferences or SharedPreferencesAsync must be provided',
+       );
 
   final SharedPreferences? sharedPreferences;
   final SharedPreferencesAsync? sharedPreferencesAsync;

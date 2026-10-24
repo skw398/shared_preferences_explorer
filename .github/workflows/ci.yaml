@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  # Detect breakage from new Flutter SDK or dependency releases without a push.
+  schedule:
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The lower bound declared in pubspec.yaml (`flutter: ">=3.47.0"`) and
+        # the latest stable release. Use `channel: stable`; with `any`, the
+        # `3.x` entry would also match beta releases.
+        flutter-version:
+          - "3.47.0"
+          - "3.x"
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ matrix.flutter-version }}
+          cache: true
+
+      - name: Install package dependencies
+        run: flutter pub get
+
+      - name: Analyze package
+        run: flutter analyze
+
+      - name: Test package
+        run: flutter test
+
+      - name: Install example dependencies
+        working-directory: example
+        run: flutter pub get
+
+      - name: Analyze example
+        working-directory: example
+        run: flutter analyze
+
+      - name: Test example
+        working-directory: example
+        run: flutter test
+
+      - name: Build example for the web
+        working-directory: example
+        run: flutter build web
+
+  score:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Fails unless the package scores the maximum. The allowed number of
+      # missing points can be relaxed with `exit-code-threshold`.
+      - uses: skw398/docker-pana@ba74c80208569de18c12b65500ccce33455b1f3a # main
+        with:
+          path: "."
+          exit-code-threshold: "0"
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: "3.47.0"
+          cache: true
+
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+  lower-bounds:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: "3.47.0"
+          cache: true
+
+      - name: Downgrade package dependencies
+        run: flutter pub downgrade
+
+      - name: Analyze package at lower bounds
+        run: flutter analyze
+
+      - name: Test package at lower bounds
+        run: flutter test
+
+      - name: Downgrade example dependencies
+        working-directory: example
+        run: flutter pub downgrade
+
+      - name: Analyze example at lower bounds
+        working-directory: example
+        run: flutter analyze
+
+      - name: Test example at lower bounds
+        working-directory: example
+        run: flutter test
+
