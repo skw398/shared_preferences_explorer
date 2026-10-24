@@ -13,8 +13,8 @@ dependencies:
   # `material_ui` brings in `cupertino_ui`, which references `CupertinoIcons`.
   # This dependency provides the font for those icons.
   cupertino_icons: ^1.0.8
-  material_ui: ^1.0.0
-  shared_preferences: ^2.3.0
+  material_ui: ^1.8.0
+  shared_preferences: ^2.5.6
   shared_preferences_explorer:
     path: ../
 
