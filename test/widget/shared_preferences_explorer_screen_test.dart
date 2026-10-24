@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,19 +73,41 @@ void main() {
     });
 
     testWidgets('Exports the filtered values', (tester) async {
+      final clipboardCalls = <MethodCall>[];
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(SystemChannels.platform, (call) async {
+            if (call.method == 'Clipboard.setData') {
+              clipboardCalls.add(call);
+            }
+            return null;
+          });
+      addTearDown(() {
+        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(SystemChannels.platform, null);
+      });
+
       await pumpExplorer(tester);
 
-      await tester.tap(find.byIcon(Icons.more_vert).first);
+      await tester.enterText(find.byType(TextField), 'action');
       await tester.pumpAndSettle();
+      expect(find.text('1 results'), findsOneWidget);
 
-      expect(find.text('Copy as JSON'), findsOneWidget);
-      expect(find.text('Dump as JSON'), findsOneWidget);
+      await tester.tap(
+        find.descendant(
+          of: find.byType(AppBar),
+          matching: find.byIcon(Icons.more_vert),
+        ),
+      );
+      await tester.pumpAndSettle();
 
       await tester.tap(find.text('Copy as JSON'));
       await tester.pumpAndSettle();
 
       expect(find.text('Copied to clipboard'), findsOneWidget);
-      expect(tester.takeException(), isNull);
+      expect(clipboardCalls, hasLength(1));
+      expect(jsonDecode(clipboardCalls.single.arguments['text'] as String), {
+        'action': 'Start',
+      });
     });
   });
 
