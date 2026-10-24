@@ -79,8 +79,8 @@ abstract class _PreferencesExplorerScreenBase extends StatelessWidget {
         'shared_preferences_explorer: the screen widgets require an app that '
         'uses package:material_ui.\n'
         'The screen widgets are built with material_ui, which needs '
-        'MaterialLocalizations from material_ui, but the host app provides the '
-        "SDK's MaterialLocalizations instead.\n"
+        'MaterialLocalizations from material_ui, but the host app does not '
+        'provide them.\n'
         'Use SharedPreferencesExplorer or SharedPreferencesAsyncExplorer (the '
         'floating button widgets), which work in any app, or stay on '
         'shared_preferences_explorer 0.4.0.\n'
