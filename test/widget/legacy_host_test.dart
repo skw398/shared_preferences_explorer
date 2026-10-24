@@ -1,3 +1,9 @@
+// This file checks how the package behaves in an app that still uses the SDK's
+// Material library. Importing it is the point of the test; the deprecation is
+// expected until the in-framework library is removed, at which point this test
+// should be deleted.
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/foundation.dart' show FlutterError;
 import 'package:flutter/material.dart' as legacy;
 import 'package:flutter_test/flutter_test.dart';
