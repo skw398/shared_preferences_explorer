@@ -358,9 +358,7 @@ void main() {
         Preference.fromKey('key4', <String>['list']),
       ]);
 
-      const filter = Filter(
-        valueTypes: [.string, ValueType.bool, ValueType.stringList],
-      );
+      const filter = Filter(valueTypes: [.string, .bool, .stringList]);
 
       final result = prefs.filtered(filter);
 
