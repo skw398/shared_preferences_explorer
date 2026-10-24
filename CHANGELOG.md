@@ -1,7 +1,7 @@
 ## 0.5.0
 
 * Update minimum supported SDK version to Flutter 3.47/Dart 3.13.
-* Requires an app that uses `material_ui`.
+* Requires an app that uses `material_ui` for the screen widgets. The floating button widgets work in any app.
 
 ## 0.4.0
 

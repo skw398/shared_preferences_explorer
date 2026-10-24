@@ -70,6 +70,25 @@ abstract class _PreferencesExplorerScreenBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (Localizations.of<MaterialLocalizations>(
+          context,
+          MaterialLocalizations,
+        ) ==
+        null) {
+      throw FlutterError(
+        'shared_preferences_explorer: the screen widgets require an app that '
+        'uses package:material_ui.\n'
+        'The screen widgets are built with material_ui, which needs '
+        'MaterialLocalizations from material_ui, but the host app provides the '
+        "SDK's MaterialLocalizations instead.\n"
+        'Use SharedPreferencesExplorer or SharedPreferencesAsyncExplorer (the '
+        'floating button widgets), which work in any app, or stay on '
+        'shared_preferences_explorer 0.4.0.\n'
+        'To migrate the app, run: '
+        'dart fix --apply --code=migrate_design_widgets',
+      );
+    }
+
     return FutureBuilder<SharedPreferencesInstanceContainer>(
       future: getInstanceContainer(),
       builder: (context, snapshot) {
