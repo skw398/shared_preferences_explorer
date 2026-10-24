@@ -21,6 +21,9 @@ updates:
     directory: "/example"
     schedule:
       interval: "weekly"
+    # The example is the minimum-supported sample: keep its constraints at the
+    # package's floor and only update the resolved versions.
+    versioning-strategy: "increase-if-necessary"
     groups:
       example-pub:
         patterns:
