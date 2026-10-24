@@ -41,7 +41,7 @@ void main() {
 
 Use `SharedPreferencesExplorerScreen` or `SharedPreferencesAsyncExplorerScreen` in places like your app's debug menu.
 
-The screen widgets require an app that uses [`material_ui`](https://pub.dev/packages/material_ui); the floating button widgets work in any app.
+The screen widgets require an app that uses [`material_ui`](https://pub.dev/packages/material_ui); the floating button widgets do not require `material_ui`.
 
 ```dart
 Navigator.of(context).push(
